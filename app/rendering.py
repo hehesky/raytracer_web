@@ -1,3 +1,5 @@
+#! python3
+
 from pyrt.math import Vec3
 from pyrt.scene import Scene
 from pyrt.light import PointLight
