@@ -30,17 +30,19 @@ def parseSphere(entity):
     
     s_center=Vec3(entity['center'].split(','))
     s_color=entity['color'].split(',')
+    s_color=Vec3(s_color)
+    s_color.normalize()
     if "reflectivity" in entity:
         s_reflect=entity['reflectivity']
-        s_material=PhongMaterial(color=Vec3(s_color),reflectivity=s_reflect)
+        s_material=PhongMaterial(color=s_color,reflectivity=s_reflect)
     else:
-        s_material=PhongMaterial(color=Vec3(s_color))
+        s_material=PhongMaterial(color=s_color)
     s_radius=float(entity['radius'])
     return Sphere(center=s_center,radius=s_radius,material=s_material)
 
 def render(entities,imageID):
     """entities is a string representing a json object listing all entities to be rendered"""
-    ents=json.load(entities)
+    ents=json.loads(entities)
     light=None
     camera=None
     objects=[]
@@ -52,7 +54,7 @@ def render(entities,imageID):
     
     #create default camera
     if camera is None:
-        camera = PerspectiveCamera(width, height, 45)
+        camera = PerspectiveCamera(400, 300, 45)
         camera.setView(Vec3(0.,-10.,10.), Vec3(0.,0.,0.), Vec3(0.,0.,1.))
     #create scene and add objects to scene
     scene=Scene()
@@ -62,35 +64,23 @@ def render(entities,imageID):
                 scene.add(o)
         else:
             scene.add(obj)
-    if light=None:
+    if light is None:
         light=PointLight(Vec3(-1,-8,1))
     scene.addLight(light)
-    engine=SimpleRT(shadow=True,iterations=1)
-    image=engine.render(scene)
+    scene.setCamera(camera)
+    engine=SimpleRT(shadow=True,iterations=2)
+    pixles=engine.render(scene)
+    image=Image.new('RGB',(camera.width,camera.height))
+    image.putdata(pixles)
     image.save(imageID)
 
-if __name__=="__main__":
+#if __name__=="__main__":
+'''
     ent={"type":"sphere",
-    "color":"255,0,0",
-    "reflectivity":"0.5",
+    "color":"255,128,0",
     'radius':1.25,
-    'center':'0,1,1.5'
+    'center':'-1,1,1.5',
+    "reflectivity":'0.2'
     }
-    ball=parseSphere(ent)
-    scene = Scene()
-    floormaterial = PhongMaterial(color=Vec3(0.1,0.1,0.1))
-    objects=[ball]
-    A = Vertex(position=(-5.0, -5.0, 0.0))
-    B = Vertex(position=( 5.0, -5.0, 0.0))
-    C = Vertex(position=( 5.0,  5.0, 0.0))
-    D = Vertex(position=(-5.0,  5.0, 0.0))
-    plane=[Triangle(A,B,C, material=floormaterial),Triangle(A,C,D, material=floormaterial)]
-    
-    objects.append(plane)
-    for obj in objects:
-        if type(obj)==list:
-            for o in obj:
-                scene.add(o)
-        else:
-            scene.add(obj)
-    print(scene.nodes)
+    render(json.dumps([ent]),"test.png")
+ '''
