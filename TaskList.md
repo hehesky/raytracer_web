@@ -34,13 +34,13 @@ Deadline: 2017-11-30 (demo)
   - [ ] provide different type of inputs for different type of objects
 
 ## DynamoDb
-- [ ] Set up new table
-- [ ] Query table for information (with boto3)
-- [ ] Store information (with boto3)
+- [x] Set up new table
+- [x] Query table for information (with boto3)
+- [x] Store/update information (with boto3)
 - [ ] Integrate into Back End
 
 ## S3
-- [ ]  Set up new bucket
+- [ ] Set up new bucket
 - [X] Upload file to S3 (with boto3) [status: old code snippet available]
 - [ ] Integrate into Back End
 
