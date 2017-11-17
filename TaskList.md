@@ -10,6 +10,7 @@ Deadline: 2017-11-30 (demo)
 ## Back End Dev (Flask)
 - [ ] Logic for index page
 - [ ] Logic for user log-in and session management
+	- [ ] password salting
 - [ ] Parsing render request (from user) [required data interface to be determined]
   - [ ] Parse Sphere object info (center, radius, color, reflectivity)
   - [ ] Parse Camera info
@@ -48,6 +49,8 @@ Deadline: 2017-11-30 (demo)
 - [ ] Test on localhost
 
 ## Zappa (deploy)
-- [x] Understand how zappa works
+- [x] Understand how to deploy using zappa
+- [ ] Check if Zappa can handle multiprocessing
+- [ ] Check if Zappa can handle "local" files
 - [ ] Deploy to AWS
 - [ ] Test deployed app
