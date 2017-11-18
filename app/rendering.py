@@ -40,7 +40,7 @@ def parseSphere(entity):
     s_radius=float(entity['radius'])
     return Sphere(center=s_center,radius=s_radius,material=s_material)
 
-def render(entities,imageID):
+def render(entities):
     """entities is a string representing a json object listing all entities to be rendered"""
     ents=json.loads(entities)
     light=None
@@ -72,7 +72,7 @@ def render(entities,imageID):
     pixles=engine.render(scene)
     image=Image.new('RGB',(camera.width,camera.height))
     image.putdata(pixles)
-    image.save(imageID)
+    return image
 
 #if __name__=="__main__":
 '''

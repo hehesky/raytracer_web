@@ -45,8 +45,9 @@ Deadline: 2017-11-30 (demo)
 - [ ] Integrate into Back End [status: integrated with login library]
 
 ## S3
-- [ ] Set up new bucket
-- [X] Upload file to S3 (with boto3) [status: old code snippet available]
+- [x] Set up new bucket
+- [X] Upload file to S3 (with boto3) [status: base library done]
+- [ ] Integrate with Renderer
 - [ ] Integrate into Back End
 
 ## Local Test
@@ -55,6 +56,6 @@ Deadline: 2017-11-30 (demo)
 ## Zappa (deploy)
 - [x] Understand how to deploy using zappa
 - [ ] Check if Zappa can handle multiprocessing
-- [ ] Check if Zappa can handle "local" files
+- [ ] ~~Check if Zappa can handle "local" files~~ [status: Cancelled. Handling file with in-memeory buffer]
 - [ ] Deploy to AWS
 - [ ] Test deployed app
