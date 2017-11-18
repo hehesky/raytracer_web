@@ -26,6 +26,7 @@ Deadline: 2017-11-30 (demo)
   - [ ] Rendering Triangle
   - [ ] Rendering other objects
   - [ ] Unit test
+  - [ ] Create a separate Lambda function for rending  
 - [ ] Fetching results
 
 ## Front End Dev (html,css,js,etc.)
@@ -55,7 +56,8 @@ Deadline: 2017-11-30 (demo)
 
 ## Zappa (deploy)
 - [x] Understand how to deploy using zappa
-- [ ] Check if Zappa can handle multiprocessing
+- [x] Check if Zappa can handle multiprocessing [status: Zappa cannot have background process if the http request has a shorter life span]
+
 - [ ] ~~Check if Zappa can handle "local" files~~ [status: Cancelled. Handling file with in-memeory buffer]
 - [ ] Deploy to AWS
 - [ ] Test deployed app

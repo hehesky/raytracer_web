@@ -12,6 +12,6 @@ def generate_salt():
 
 def salted_password(salt, password):
     
-    cat=salt + password
+    cat=salt + password.encode('ascii')
     return hashlib.sha256(cat).hexdigest()
 
