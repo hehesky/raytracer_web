@@ -9,10 +9,12 @@ Deadline: 2017-11-30 (demo)
 
 ## Back End Dev (Flask)
 - [ ] Logic for index page
-- [ ] Logic for user log-in and session management
-	- [ ] password salting
+- [ ] Logic for user log-in and session management 
+	- [x] password salting
+	- [x] Login library
+	- [ ] Integrate with front end
 - [ ] Parsing render request (from user) [required data interface to be determined]
-  - [ ] Parse Sphere object info (center, radius, color, reflectivity)
+  - [x] Parse Sphere object info (center, radius, color, reflectivity)
   - [ ] Parse Camera info
   - [ ] Parse Light Source info
   - [ ] Parse Triangle
@@ -29,7 +31,9 @@ Deadline: 2017-11-30 (demo)
 ## Front End Dev (html,css,js,etc.)
 - [ ] Index page
 - [ ] Login page (and form)
-- [ ] User homepage (displaying fetched results)
+  - [ ] Bare-bone page
+- [ ] User dashboard page (displaying fetched results)
+  - [ ] Bare-bone dashboard
 - [ ] Request page & request form (include pre-processing logic in js)
   - [ ] allow adding/removing objects (that will be rendered) in the form
   - [ ] provide different type of inputs for different type of objects
@@ -38,7 +42,7 @@ Deadline: 2017-11-30 (demo)
 - [x] Set up new table
 - [x] Query table for information (with boto3)
 - [x] Store/update information (with boto3)
-- [ ] Integrate into Back End
+- [ ] Integrate into Back End [status: integrated with login library]
 
 ## S3
 - [ ] Set up new bucket
