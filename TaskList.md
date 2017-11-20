@@ -2,10 +2,6 @@
 
 Deadline: 2017-11-30 (demo)
 
-## Design Decisions
-- Data interface [HIGH PRIORITY]
-- Type of 3D objects allowed [HIGH PRIORITY]
-- Limit of requested 3D objects to render
 
 ## Back End Dev (Flask)
 - [ ] Logic for index page
