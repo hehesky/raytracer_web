@@ -15,9 +15,9 @@ Deadline: 2017-11-30 (demo)
 	- [ ] Integrate with front end
 - [ ] Parsing render request (from user) [required data interface to be determined]
   - [x] Parse Sphere object info (center, radius, color, reflectivity)
-  - [ ] Parse Camera info
+  - [ ] ~~Parse Camera info~~ [cancelled]
   - [ ] Parse Light Source info
-  - [ ] Parse Triangle
+  - [x] Parse Triangle
   - [ ] Parse other type of objects
   - [ ] Unit test
 - [ ] Render 3D image (pyrt)
