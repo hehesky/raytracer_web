@@ -56,6 +56,11 @@ def parseTriangle(entity):
     return Triangle(A,B,C,material=t_material)
 
 
+def parseLight(entity):
+    if entity['type']!='light':
+        raise ValueError("entity passed to parseLight is not a light")
+    pos=Vec3(entity['position'].split(','))
+    return PointLight(pos)
 
 def parse(request_txt):
     request_dic=json.loads(request_txt)
@@ -68,8 +73,8 @@ def parse(request_txt):
              objs.append(parseSphere(ent))
         elif ent['type'] == 'triangle':
             objs.append(parseTriangle(ent))
-        #elif parse other
-
+        elif ent['type']=='light':
+            light=parseLight(ent)
         #create default camera
     if camera is None:
         camera = PerspectiveCamera(400, 300, 45)
@@ -83,7 +88,8 @@ if __name__=='__main__':
         'id':"123",
         "entities":[
             {"type":"triangle","A":"1.2,1.5,3","B":"1.0,6,1","C":'0,0,0','color':'0,1,0'},
-            {"type":"sphere","center":'0,0,0','radius':'1.2','color':'0.4,0.5,0.1',}
+            {"type":"sphere","center":'0,0,0','radius':'1.2','color':'0.4,0.5,0.1',},
+            {'position':'1,2,3','type':'light'}
         ]
     }
     s=json.dumps(d)
