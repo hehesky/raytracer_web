@@ -9,40 +9,10 @@ from pyrt.camera import PerspectiveCamera
 from pyrt.renderer import SimpleRT
 from PIL import Image
 
-import json
 
-def parseSphere(entity):
-    """process a dictionary (entity) containing 
-    info about a sphere and return a pyrt.gemetry.Sphere() object
+def render(ents):
+    """entities is dictionary representing a json object listing all entities to be rendered"""
     
-    entity=
-    {
-        "type":"sphere",
-        "radius":"string representing a float number",
-        "center":"x,y,z",#string of float numbers seperated by commas
-        "color":"r,g,b" #int  0-255 seperated by commas,
-        "reflectivity":"string representing a float number 0-1"
-    }
-    """
-
-    if entity['type']!="sphere":
-        raise ValueError("entity passed to parseSphere() is not a sphere")
-    
-    s_center=Vec3(entity['center'].split(','))
-    s_color=entity['color'].split(',')
-    s_color=Vec3(s_color)
-    s_color.normalize()
-    if "reflectivity" in entity:
-        s_reflect=entity['reflectivity']
-        s_material=PhongMaterial(color=s_color,reflectivity=s_reflect)
-    else:
-        s_material=PhongMaterial(color=s_color)
-    s_radius=float(entity['radius'])
-    return Sphere(center=s_center,radius=s_radius,material=s_material)
-
-def render(entities):
-    """entities is a string representing a json object listing all entities to be rendered"""
-    ents=json.loads(entities)
     light=None
     camera=None
     objects=[]
@@ -74,13 +44,5 @@ def render(entities):
     image.putdata(pixles)
     return image
 
-#if __name__=="__main__":
-'''
-    ent={"type":"sphere",
-    "color":"255,128,0",
-    'radius':1.25,
-    'center':'-1,1,1.5',
-    "reflectivity":'0.2'
-    }
-    render(json.dumps([ent]),"test.png")
- '''
+def lambda_handler(event,context):
+	raise NotImplementedError
