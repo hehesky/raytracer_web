@@ -11,36 +11,25 @@ from PIL import Image
 
 
 def render(ents):
-    """entities is dictionary representing a json object listing all entities to be rendered"""
+    """entities is dictionary representing objects in scene"""
+
     
-    light=None
-    camera=None
-    objects=[]
-    for ent in ents:
-        if ent['type']=='sphere':
-            objects.append(parseSphere(ent))
-        #else:
-            #parse other type of objects
-    
-    #create default camera
-    if camera is None:
-        camera = PerspectiveCamera(400, 300, 45)
-        camera.setView(Vec3(0.,-10.,10.), Vec3(0.,0.,0.), Vec3(0.,0.,1.))
+
     #create scene and add objects to scene
     scene=Scene()
-    for obj in objects:
-        if type(obj)==list:
+    for obj in ents['objects']:
+        if isinstance(obj,list):
             for o in obj:
                 scene.add(o)
         else:
             scene.add(obj)
-    if light is None:
-        light=PointLight(Vec3(-1,-8,1))
-    scene.addLight(light)
-    scene.setCamera(camera)
+    if ents['light'] is None:
+        ents['light']=PointLight(Vec3(-1,-8,1))
+    scene.addLight(ents['light'])
+    scene.setCamera(ents['camera'])
     engine=SimpleRT(shadow=True,iterations=2)
     pixles=engine.render(scene)
-    image=Image.new('RGB',(camera.width,camera.height))
+    image=Image.new('RGB',(ents['camera'].width,ents['camera'].height))
     image.putdata(pixles)
     return image
 
