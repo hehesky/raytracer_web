@@ -11,10 +11,7 @@ from PIL import Image
 
 
 def render(ents):
-    """entities is dictionary representing objects in scene"""
-
-    
-
+    """entities is dictionary built in obj_parser.parse() representing objects in scene"""
     #create scene and add objects to scene
     scene=Scene()
     for obj in ents['objects']:
@@ -28,10 +25,11 @@ def render(ents):
     scene.addLight(ents['light'])
     scene.setCamera(ents['camera'])
     engine=SimpleRT(shadow=True,iterations=2)
-    pixles=engine.render(scene)
-    image=Image.new('RGB',(ents['camera'].width,ents['camera'].height))
-    image.putdata(pixles)
+    image=engine.render(scene)
+
+    image.save(ents['id'])#for testing only
     return image
+
 
 def lambda_handler(event,context):
 	raise NotImplementedError

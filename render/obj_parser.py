@@ -63,7 +63,9 @@ def parseLight(entity):
     return PointLight(pos)
 
 def parse(request_txt):
+    
     request_dic=json.loads(request_txt)
+    id=request_dic['id']
     entities=request_dic['entities']
     objs=[]
     camera=None
@@ -80,12 +82,12 @@ def parse(request_txt):
         camera = PerspectiveCamera(400, 300, 45)
         camera.setView(Vec3(0.,-10.,10.), Vec3(0.,0.,0.), Vec3(0.,0.,1.))
 
-    ret={"objects":objs,'camera':camera,'light':light}
+    ret={'id':id,"objects":objs,'camera':camera,'light':light}
     return ret
 
 if __name__=='__main__':
     d={
-        'id':"123",
+        'id':"123.jpg",
         "entities":[
             {"type":"triangle","A":"1.2,1.5,3","B":"1.0,6,1","C":'0,0,0','color':'0,1,0'},
             {"type":"sphere","center":'0,0,0','radius':'1.2','color':'0.4,0.5,0.1',},
