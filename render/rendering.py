@@ -32,4 +32,4 @@ def render(ents):
 
 
 def lambda_handler(event,context):
-	raise NotImplementedError
+    raise NotImplementedError

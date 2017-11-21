@@ -7,8 +7,10 @@ try:
     S3_SECRET = os.environ['S3_SECRET']
     S3_BUCKET = os.environ['S3_BUCKET']
 except KeyError:
-    from app.config import S3_KEY, S3_SECRET, S3_BUCKET
+    raise EnvironmentError("S3 related environment variables unavailable")
 finally:
+    S3_BUCKET = 'rtweb-9468'
+    S3_ROOT = 'https://s3.us-east-2.amazonaws.com/rtweb-9468'
     s3 = boto3.resource('s3', aws_access_key_id=S3_KEY, aws_secret_access_key=S3_SECRET)
     bucket = s3.Bucket(S3_BUCKET)
 
