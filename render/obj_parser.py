@@ -56,15 +56,39 @@ def parseTriangle(entity):
     return Triangle(A,B,C,material=t_material)
 
 
+def parseRect(entity):
+    '''{"type":"rectangle","A":"1.2,1.5,3","B":"1.0,6,1","C":'0,0,0','color':'0,1,0'}'''
+
+    if entity['type']!='rectangle':
+    	raise ValueError("entity passed to parseTriangle is not a rectangle")
+    A_pos=entity['A'].split(',')
+    B_pos=entity['B'].split(',')
+    C_pos=entity['C'].split(',')
+    assert len(A_pos)==3
+    A=Vertex(position=A_pos)
+    B=Vertex(position=B_pos)
+    C=Vertex(position=C_pos)
+    D=Vertext(position=Vec3(A)+Vec3(C)-Vec3(B))
+    r_color_txt= entity['color'].split(',')
+    r_color=Vec3(t_color_txt)
+    r_color.normalize()
+    if "reflectivity" in entity:
+        r_reflect=float(entity['reflectivity'])
+        r_material=PhongMaterial(color=t_color,reflectivity=s_reflect)
+    else:
+        r_material=PhongMaterial(color=r_color)
+    return [Triangle(A,B,C,material=r_material),Triangle(A,C,D,material=r_material)]
+
+
 def parseLight(entity):
     if entity['type']!='light':
         raise ValueError("entity passed to parseLight is not a light")
     pos=Vec3(entity['position'].split(','))
     return PointLight(pos)
 
-def parse(request_txt):
+def parse(request_dic):
     
-    request_dic=json.loads(request_txt)
+    
     id=request_dic['id']
     entities=request_dic['entities']
     objs=[]

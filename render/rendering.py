@@ -1,5 +1,6 @@
 #! python3
-
+import io
+from os.path import splitext
 from pyrt.math import Vec3
 from pyrt.scene import Scene
 from pyrt.light import PointLight
@@ -8,8 +9,9 @@ from pyrt.material import PhongMaterial
 from pyrt.camera import PerspectiveCamera
 from pyrt.renderer import SimpleRT
 from PIL import Image
-
-
+from s3_lib import upload_file_obj
+import db_util
+import obj_parser
 def render(ents):
     """entities is dictionary built in obj_parser.parse() representing objects in scene"""
     #create scene and add objects to scene
@@ -26,10 +28,28 @@ def render(ents):
     scene.setCamera(ents['camera'])
     engine=SimpleRT(shadow=True,iterations=2)
     image=engine.render(scene)
-
-    image.save(ents['id'])#for testing only
+ 
     return image
 
 
 def lambda_handler(event,context):
-	raise NotImplementedError
+    """event is a json object"""
+    try:
+        ents=obj_parser.parse(event)
+        image = render(ents)
+        im=Image.new('RGB',(image.width,image.height))
+        im.putdata(image.data)
+        buf=io.BytesIO()
+        _,ext=splitext(ents['id'])
+        ext=ext[1:]
+        if ext in ('jpg','JPG'):
+            ext='jpeg'
+        im.save(buf,ext)
+        buf.seek(0)
+        upload_file_obj(buf,ents['id']) #upload to S3
+
+        #set db record status to success
+        db_util.set_request_stat(ents['id'],'success')
+    except:
+        #set db record status to failed
+        db_util.set_request_stat(ents['id'],'failed')
