@@ -48,3 +48,7 @@ def dashboard():
 
     #TODO:get past user request
     return render_template("dashboard.html")
+
+@webapp.route("/request",methods=["GET",'POST'])
+def render_request():
+    return "To be implemented"
