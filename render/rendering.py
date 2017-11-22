@@ -45,9 +45,9 @@ def lambda_handler(event,context):
         buf.seek(0)
         upload_file_obj(buf,ents['id']) #upload to S3
     
-        set db record status to success
+        #set db record status to success
         db_util.set_request_stat(ents['id'],'success')
     except:
-        set db record status to failed
+        #set db record status to failed
         db_util.set_request_stat(ents['id'],'failed')
         print("something went wrong")
