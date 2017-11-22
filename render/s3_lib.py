@@ -5,7 +5,7 @@ import io
 try:
     S3_KEY = os.environ['S3_KEY']
     S3_SECRET = os.environ['S3_SECRET']
-    S3_BUCKET = os.environ['S3_BUCKET']
+    
 except KeyError:
     raise EnvironmentError("S3 related environment variables unavailable")
 finally:

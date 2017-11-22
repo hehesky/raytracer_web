@@ -68,13 +68,13 @@ def parseRect(entity):
     A=Vertex(position=A_pos)
     B=Vertex(position=B_pos)
     C=Vertex(position=C_pos)
-    D=Vertext(position=Vec3(A)+Vec3(C)-Vec3(B))
+    D=Vertex(position=Vec3(A_pos)+Vec3(C_pos)-Vec3(B_pos))
     r_color_txt= entity['color'].split(',')
-    r_color=Vec3(t_color_txt)
+    r_color=Vec3(r_color_txt)
     r_color.normalize()
     if "reflectivity" in entity:
         r_reflect=float(entity['reflectivity'])
-        r_material=PhongMaterial(color=t_color,reflectivity=s_reflect)
+        r_material=PhongMaterial(color=r_color,reflectivity=s_reflect)
     else:
         r_material=PhongMaterial(color=r_color)
     return [Triangle(A,B,C,material=r_material),Triangle(A,C,D,material=r_material)]
@@ -99,11 +99,13 @@ def parse(request_dic):
              objs.append(parseSphere(ent))
         elif ent['type'] == 'triangle':
             objs.append(parseTriangle(ent))
+        elif ent['type'] == 'rectangle':
+            objs += parseRect(ent)
         elif ent['type']=='light':
             light=parseLight(ent)
         #create default camera
     if camera is None:
-        camera = PerspectiveCamera(400, 300, 45)
+        camera = PerspectiveCamera(400, 300, 60)
         camera.setView(Vec3(0.,-10.,10.), Vec3(0.,0.,0.), Vec3(0.,0.,1.))
 
     ret={'id':id,"objects":objs,'camera':camera,'light':light}

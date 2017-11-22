@@ -4,9 +4,7 @@ from os.path import splitext
 from pyrt.math import Vec3
 from pyrt.scene import Scene
 from pyrt.light import PointLight
-from pyrt.geometry import Triangle, Sphere, Vertex
-from pyrt.material import PhongMaterial
-from pyrt.camera import PerspectiveCamera
+
 from pyrt.renderer import SimpleRT
 from PIL import Image
 from s3_lib import upload_file_obj
@@ -37,8 +35,7 @@ def lambda_handler(event,context):
     try:
         ents=obj_parser.parse(event)
         image = render(ents)
-        im=Image.new('RGB',(image.width,image.height))
-        im.putdata(image.data)
+        im = Image.fromarray(image.data)
         buf=io.BytesIO()
         _,ext=splitext(ents['id'])
         ext=ext[1:]
@@ -47,9 +44,10 @@ def lambda_handler(event,context):
         im.save(buf,ext)
         buf.seek(0)
         upload_file_obj(buf,ents['id']) #upload to S3
-
-        #set db record status to success
+    
+        set db record status to success
         db_util.set_request_stat(ents['id'],'success')
     except:
-        #set db record status to failed
+        set db record status to failed
         db_util.set_request_stat(ents['id'],'failed')
+        print("something went wrong")
