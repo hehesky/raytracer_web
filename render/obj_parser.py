@@ -86,9 +86,9 @@ def parseLight(entity):
     pos=Vec3(entity['position'].split(','))
     return PointLight(pos)
 
-def parse(request_txt):
+def parse(request_dic):
     
-    request_dic=json.loads(request_txt)
+    
     id=request_dic['id']
     entities=request_dic['entities']
     objs=[]
