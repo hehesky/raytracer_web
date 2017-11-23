@@ -105,7 +105,7 @@ def parse(request_dic):
             light=parseLight(ent)
         #create default camera
     if camera is None:
-        camera = PerspectiveCamera(400, 300, 60)
+        camera = PerspectiveCamera(400, 300, 45)
         camera.setView(Vec3(0.,-10.,10.), Vec3(0.,0.,0.), Vec3(0.,0.,1.))
 
     ret={'id':id,"objects":objs,'camera':camera,'light':light}
