@@ -1,5 +1,5 @@
 #! python3
-import io
+import io, sys
 from os.path import splitext
 from pyrt.math import Vec3
 from pyrt.scene import Scene
@@ -24,7 +24,7 @@ def render(ents):
         ents['light']=PointLight(Vec3(-1,-8,1))
     scene.addLight(ents['light'])
     scene.setCamera(ents['camera'])
-    engine=SimpleRT(shadow=True,iterations=2)
+    engine=SimpleRT(shadow=True,iterations=3)
     image=engine.render(scene)
  
     return image
