@@ -2,7 +2,7 @@
 from app import webapp
 # import app.db_util
 # import app.login
-import boto3
+import boto3, json, uuid
 from flask import g,session,request,render_template,redirect,url_for
 @webapp.route('/')
 @webapp.route('/index')
@@ -54,6 +54,15 @@ def form():
     if request.method == 'GET':
         return render_template("form.html")
     else:
+        entities = request.form['output_json']
+        print(entities)
+        d={
+            'id': str(uuid.uuid4())[:18] +".jpg",
+            "entities":[
+                json.loads(entities)
+            ]
+        }
+        print(d)
         return 
     
 

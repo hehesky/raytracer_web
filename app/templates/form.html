@@ -27,7 +27,7 @@
   		  	</table>
   	</div>	  	
 		
-	    <form id="form" onload="initializeForms()" onsubmit="return makeJson()">
+	    <form id="form" onload="initializeForms()" onsubmit="return makeJson()" method="POST">
 	    	<div id="light_form">
 		    	<table>
 					<tr>
@@ -144,7 +144,8 @@
 				</div>   
 			</div>
 			<hr/>
-			<input  type="submit" value="GENERATE"/> 
+			<input type="submit" value="GENERATE"/> 
+			<input type="hidden" id= "output_json" name="output_json"/>
   		</form>
 	</div>
 {% endblock %}

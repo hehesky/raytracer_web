@@ -26,7 +26,7 @@ function makeJson(){
 	json = [r_json, s_json, t_json];
 	json.push(JSON.stringify(light_json));
 	json = json.filter(function(string){ return string != '' });
-	return json.join(", ");
+	$("input[name='output_json']").val(json.join(", "));
 }
 
 function getRectangles(number){
