@@ -1,8 +1,11 @@
 <!doctype html>
 <head>
 	<title>{% block title %}{% endblock %}</title>
-	<link rel=stylesheet href="{{ url_for('css', filename='style.css') }}">
+	<link rel=stylesheet href="{{ url_for('static', filename='style.css') }}">
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="{{ url_for('static', filename='main.js') }}"></script>
+	<script src="{{ url_for('static', filename='generateForm.js') }}"></script>
+	
 	
     <!-- Bootstrap core JavaScript -->
     <script src="{{ url_for('static', filename='jquery/jquery.min.js') }}"></script>
@@ -23,8 +26,8 @@
 		<div class=pageHeader>
 		  <h1>Raytracer Service</h1>
 		  <h5>{% block header %}{% endblock %}</h5>
-		  {% block body %}{% endblock %}
 		</div>
+		{% block body %}{% endblock %}
 	</div>
 </body>
 <footer class="footer">

@@ -1,13 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Register{% endblock %}
-{% block header %} Please register if you haven't got an account.
+{% block header %} Please register if you haven't got an account.{% endblock %}
 {% block body %}
 	<div class="register">
-	    <form method="post">
-	    	<input type="text" name="u" placeholder="Username" required="required" />
-	        <input type="password" name="p" placeholder="Password" required="required" />
-	        <input type="password" name="p" placeholder="Re-enter Password" required="required" />
-	        <button type="submit" class="btn btn-primary btn-block btn-large">Go register.</button>
+	    <form method="POST" onsubmit="return check_form()">
+	    	<input type="text" id="username" name="username" placeholder="Username" required="required" />
+	        <input type="password" id="password" name="p" placeholder="Password" required="required" />
+	        <input type="password" id="password_confirm" name="p" placeholder="Re-enter Password" required="required" />
+	        <p style="color: red;" id="password_warning"></p>
+	        <button type="submit" class="submit btn btn-primary btn-block btn-large">Go register.</button>
+	        <p class="message">Already registered? <a class="message" href='/login'">Sign In</a></p>
 	    </form>
 	</div>
 {% endblock %}

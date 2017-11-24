@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
-{% block header %} Please login or register.
+{% block header %} Please login or register.{% endblock %}
 {% block body %}
 	<div class="index">
-	   	<button type="button" class="btn btn-primary btn-block btn-large" onclick="location.href='/login'>Login here</button>
-	    <button type="button" class="btn btn-primary btn-block btn-large" onclick="location.href='/register'">Register</button>
+		<button type="button" class="btn btn-primary btn-block btn-large" onclick="location.href='/login'">Login</button>
+	   	<button type="button" class="btn btn-primary btn-block btn-large" onclick="location.href='/register'">Register</button>
 	</div>
 {% endblock %}

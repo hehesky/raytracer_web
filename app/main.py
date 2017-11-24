@@ -19,14 +19,14 @@ def login():
     else:
         username=request.form['username']
         password=request.form['password']
-
+ 
         result=app.login.login(username,password)
         if result is True:
             session['username']=username
             return redirect(url_for('dashboard'))
         else:
             return render_template("login_fail.html")
-            
+             
 @webapp.route('/register',methods=["GET","POST"])
 def register():
     if request.method == 'GET':
@@ -34,13 +34,13 @@ def register():
     else:
         username=request.form['username']
         password=request.form['password']
-
+ 
         if app.login.register(username,password) is True:
             session['username']=username
             return redirect(url_for('dashboard'))
         else:
             return "Username not available"
-
+        
 @webapp.route("/dashboard")
 def dashboard():
     if 'username' not in session:
@@ -48,6 +48,24 @@ def dashboard():
 
     #TODO:get past user request
     return render_template("dashboard.html")
+
+@webapp.route("/generateForm", methods=["GET", "POST"])
+def generateForm():
+    if request.method == 'GET':
+        return render_template("generateForm.html")
+    else:
+        rectangles=request.form['rectangle']
+        spheres=request.form['sphere']
+        triangles=request.form['triangle']
+        figures = [rectangles, spheres, triangles]
+        return 
+    
+
+
+@webapp.route("/form")
+def form(figures):
+    return render_template("form.html")
+
 
 @webapp.route("/request",methods=["GET",'POST'])
 def render_request():

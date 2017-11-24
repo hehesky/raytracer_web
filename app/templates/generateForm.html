@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block title %}Form{% endblock %}
+{% block header %} Please enter figure information.{% endblock %}
+{% block body %}
+	<div class="generate_figure">
+			<table>
+				<tr>
+				  <td>Number of rectangles: </td>
+				  <td><input type="number" id="rectangle" name="rectangle" value="1" min="0" max="5" step="1" onchange="updateForm(this.value,0);"></td>
+				</tr>
+				<tr>
+				  <td>Number of spheres: </td>
+				  <td><input type="number" id="sphere" name="sphere" value="1" min="0" max="5" step="1" onchange="updateForm(this.value,1);"></td>
+		  		</tr>
+		  		<tr>
+				  <td>Number of triangles: </td>
+		  		  <td><input type="number" id="triangle" name="triangle" value="1" min="0" max="5" step="1"onchange="updateForm(this.value,2);" ></td>
+		  		</tr>
+  		  	</table>
+  	</div>	  	
+		
+	    <form id="form" onload="initializeForms()">
+	    	<div id="rectangle_forms">  
+		    	<div id="rectangle_form1">
+		    		<hr />
+		    		Rectangle <span class="figure_id">1</span></br>
+				  <table>
+					  <tr>
+				      	<td>X</td>
+				      	<td>1<input name="rectangle_x" type="number" step=any id="x1" /></td>
+				      	<td>2<input name="rectangle_x" type="number" step=any id="x2" /></td>
+				      	<td>3<input name="rectangle_x" type="number" step=any id="x3" /></td>
+				      	<td>4<input name="rectangle_x" type="number" step=any id="x4" /></td>
+				      	<td>5<input name="rectangle_x" type="number" step=any id="x5" /></td>
+				      	<td>6<input name="rectangle_x" type="number" step=any id="x6" /></td>
+				      	<td>7<input name="rectangle_x" type="number" step=any id="x7" /></td>
+				      	<td>8<input name="rectangle_x" type="number" step=any id="x8" /></td>
+				      </tr>
+				      <tr>
+				      	<td>Y</td>
+				      	<td>1<input name="rectangle_y" type="number" step=any id="y1" /></td>
+				      	<td>2<input name="rectangle_y" type="number" step=any id="y2" /></td>
+				      	<td>3<input name="rectangle_y" type="number" step=any id="y3" /></td>
+				      	<td>4<input name="rectangle_y" type="number" step=any id="y4" /></td>
+				      	<td>5<input name="rectangle_y" type="number" step=any id="y5" /></td>
+				      	<td>6<input name="rectangle_y" type="number" step=any id="y6" /></td>
+				      	<td>7<input name="rectangle_y" type="number" step=any id="y7" /></td>
+				      	<td>8<input name="rectangle_y" type="number" step=any id="y8" /></td>
+				      </tr>
+				      <tr>
+				      	<td>Z</td>
+				      	<td>1<input name="rectangle_z" type="number" step=any id="z1" /></td>
+				      	<td>2<input name="rectangle_z" type="number" step=any id="z2" /></td>
+				      	<td>3<input name="rectangle_z" type="number" step=any id="z3" /></td>
+				      	<td>4<input name="rectangle_z" type="number" step=any id="z4" /></td>
+				      	<td>5<input name="rectangle_z" type="number" step=any id="z5" /></td>
+				      	<td>6<input name="rectangle_z" type="number" step=any id="z6" /></td>
+				      	<td>7<input name="rectangle_z" type="number" step=any id="z7" /></td>
+				      	<td>8<input name="rectangle_z" type="number" step=any id="z8" /></td>
+				      </tr>
+				      <tr>
+				      	<td>Color </td><td>R<input type="number" name="color_r" step=any id="color_r1" /></td><td>G<input type="number" name="color_g" step=any id="color_g1" /></td><td>B<input type="number" name="color_b" step=any id="color_b1" /></td>
+				      </td>
+				      <tr>
+				      	<td>Reflectivity</td>
+				      	<td>1 to 10<input type="number" name="reflectivity" min="0" max="10" step="1" id="reflect1" /></td><tr/>
+				      </tr>
+				    </table>
+				</div>    
+			</div>   
+			<div id="sphere_forms">
+				<div id="sphere_form1">
+					<hr/>
+				    Sphere <span class="figure_id">1</span></br>
+				    <table>
+				      <tr>
+					      <td>Radius</td><td><input type="number" step="any" id="radius1" /></td>
+					  </tr>
+					  <tr>
+				      	<td>Center</td>
+				      	<td>X<input type="number" step=any id="center_x1" /></td>
+				      	<td>Y<input type="number" step=any id="center_y1" /></td>
+				      	<td>Z<input type="number" step=any id="center_z1" /></td>
+				      </tr>
+				      <tr>
+				      	<td>Color </td><td>R<input type="number" name="color_r" step=any id="color_r1" /></td><td>G<input type="number" name="color_g" step=any id="color_g1" /></td><td>B<input type="number" name="color_b" step=any id="color_b1" /></td>
+				      </td>
+				      <tr>
+				      	<td>Reflectivity</td>
+				      	<td>1 to 10<input type="number" name="reflectivity" min="0" max="10" step="1" id="reflect1" /></td><tr/>
+				      </tr>
+				    </table>
+				</div>
+			</div>   
+			<div id="triangle_forms">
+				<div id="triangle_form1">
+					<hr/>
+				    Triangle <span class="figure_id">1</span></br>
+				    <table>
+					  <tr>
+				      	<td>X</td>
+				      	<td>1<input name="triangle_x"type="number" step=any id="x1" /></td>
+				      	<td>2<input name="triangle_x"type="number" step=any id="x2" /></td>
+				      	<td>3<input name="triangle_x" type="number" step=any id="x3" /></td>
+				      </tr>
+				       <tr>
+				      	<td>Y</td>
+				      	<td>1<input name="triangle_y" type="number" step=any id="y1" /></td>
+				      	<td>2<input name="triangle_y" type="number" step=any id="y2" /></td>
+				      	<td>3<input name="triangle_y" type="number" step=any id="y3" /></td>
+				      </tr>
+				       <tr>
+				      	<td>Z</td>
+				      	<td>1<input name="triangle_z" type="number" step=any id="z1" /></td>
+				      	<td>2<input name="triangle_z" type="number" step=any id="z2" /></td>
+				      	<td>3<input name="triangle_z" type="number" step=any id="z3" /></td>
+				      </tr>
+				      <tr>
+				      	<td>Color </td><td>R<input type="number" name="color_r" step=any id="color_r1" /></td><td>G<input type="number" name="color_g" step=any id="color_g1" /></td><td>B<input type="number" name="color_b" step=any id="color_b1" /></td>
+				      </td>
+				      <tr>
+				      	<td>Reflectivity</td>
+				      	<td>1 to 10<input type="number" name="reflectivity" min="0" max="10" step="1" id="reflect1" /></td><tr/>
+				      </tr>
+				    </table>
+				</div>   
+			</div> 
+  		</form>
+	</div>
+{% endblock %}

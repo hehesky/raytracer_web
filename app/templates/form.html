@@ -1,26 +1,37 @@
-<html>
-<head>
-    <script src="form_lib.js"></script>
-</head>
-<body>
-  <p>
-    hello
-  </p>
-  <form id="form">
-    
-    <input type="button" onClick="add_sphere()" value="add sphere"/>
-    <input type="number" id="sphere_count" value="0" hidden="true" />
-    <br />
-    <hr />
-    <span id="sphere1">
-      <label>Radius </label><input type="number" step="any" id="radius1" /><br/>
-      <label>Center X </label><input type="number" step=any id="center_x1" /><br/>
-      <label>Center Y </label><input type="number" step=any id="center_y1" /><br/>
-      <label>Center Z </label><input type="number" step=any id="center_z1" /><br/>
-      <label>Color </label>R<input type="number" step=any id="color_r1" />G<input type="number" step=any id="color_g1" />B<input type="number" step=any id="color_b1" /><br/>
-    </span>
-  </form>
-</body>
-</html>
-
-<!-- https://jsfiddle.net/uLyuyr3b/1/-->
+{% extends "base.html" %}
+{% block title %}Form{% endblock %}
+{% block header %} Please enter figure information.{% endblock %}
+{% block body %}
+	<div class="generate_figure">
+		<form action="/action_page.php">
+			<table>
+				<tr>
+				  <td>Number of rectangles: </td>
+				  <td><input type="number" id="rectangle" name="rectangle" value="0" min="0" max="5" step="1"></td>
+				</tr>
+				<tr>
+				  <td>Number of spheres: </td>
+				  <td><input type="number" id="sphere" name="sphere" value="0" min="0" max="5" step="1"></td>
+		  		</tr>
+		  		<tr>
+				  <td>Number of triangles: </td>
+		  		  <td><input type="number" id="triangle" name="triangle" value="0" min="0" max="5" step="1"></td>
+		  		</tr>
+  		  	</table>
+		  <input class="submit" type="submit">
+		</form>
+		<hr />
+	    <form id="form">
+	    	<div id="sphere_form1">
+		    <p>Sphere <p class="figure_id">1</p>
+		    <span id="sphere1">
+		      <label>Radius </label><input type="number" step="any" id="radius1" /><br/>
+		      <label>Center X </label><input type="number" step=any id="center_x1" /><br/>
+		      <label>Center Y </label><input type="number" step=any id="center_y1" /><br/>
+		      <label>Center Z </label><input type="number" step=any id="center_z1" /><br/>
+		      <label>Reflectivity</lable><input type="range" min="0" max="10" step="1" id="reflect1" /><br/>
+		      <label>Color </label>R<input type="number" step=any id="color_r1" />G<input type="number" step=any id="color_g1" />B<input type="number" step=any id="color_b1" /><br/>
+		    </span>
+  		</form>
+	</div>
+{% endblock %}
