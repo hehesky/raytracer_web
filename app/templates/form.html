@@ -2,36 +2,149 @@
 {% block title %}Form{% endblock %}
 {% block header %} Please enter figure information.{% endblock %}
 {% block body %}
+	<p class="error_message"></p>
 	<div class="generate_figure">
-		<form action="/action_page.php">
 			<table>
 				<tr>
 				  <td>Number of rectangles: </td>
-				  <td><input type="number" id="rectangle" name="rectangle" value="0" min="0" max="5" step="1"></td>
+				  <td><input type="submit" value="+" onclick="incrementForm(0);"/></td>
+				  <td><input type="number" id="rectangle_num" name="rectangle_num" value="1" readonly> </td>
+				  <td><input  type="submit" value="-" onclick="decrementForm(0);"></td>
+				  
 				</tr>
 				<tr>
 				  <td>Number of spheres: </td>
-				  <td><input type="number" id="sphere" name="sphere" value="0" min="0" max="5" step="1"></td>
+				  <td><input type="submit" value="+" onclick="incrementForm(1);"/></td>
+				  <td><input type="number" id="sphere_num" name="sphere_num" value="1" readonly> </td>
+				  <td><input  type="submit" value="-" onclick="decrementForm(1);"></td>
 		  		</tr>
 		  		<tr>
 				  <td>Number of triangles: </td>
-		  		  <td><input type="number" id="triangle" name="triangle" value="0" min="0" max="5" step="1"></td>
+				  <td><input type="submit" value="+" onclick="incrementForm(2);"/></td>
+				  <td><input type="number" id="triangle_num" name="triangle_num" value="1" readonly> </td>
+				  <td><input  type="submit" value="-" onclick="decrementForm(2);"></td>
 		  		</tr>
   		  	</table>
-		  <input class="submit" type="submit">
-		</form>
-		<hr />
-	    <form id="form">
-	    	<div id="sphere_form1">
-		    <p>Sphere <p class="figure_id">1</p>
-		    <span id="sphere1">
-		      <label>Radius </label><input type="number" step="any" id="radius1" /><br/>
-		      <label>Center X </label><input type="number" step=any id="center_x1" /><br/>
-		      <label>Center Y </label><input type="number" step=any id="center_y1" /><br/>
-		      <label>Center Z </label><input type="number" step=any id="center_z1" /><br/>
-		      <label>Reflectivity</lable><input type="range" min="0" max="10" step="1" id="reflect1" /><br/>
-		      <label>Color </label>R<input type="number" step=any id="color_r1" />G<input type="number" step=any id="color_g1" />B<input type="number" step=any id="color_b1" /><br/>
-		    </span>
+  	</div>	  	
+		
+	    <form id="form" onload="initializeForms()" onsubmit="return makeJson()">
+	    	<div id="light_form">
+		    	<table>
+					<tr>
+						<td>Light Position</td>
+						<td>X<input name="light_x" type="number" value ="1" step=any required="required"/></td>
+						<td>Y<input name="light_y" type="number" value ="1" step=any required="required"/></td>
+						<td>Z<input name="light_z" type="number" value ="1" step=any required="required"/></td>
+					</tr>	
+				</table>
+			</div>
+	    	<div id="rectangle_forms">  
+		    	<div id="rectangle_form1">
+		    		<hr />
+		    		Rectangle <span class="figure_id">1</span></br>
+				  <table>
+					  <tr>
+				      	<td>X</td>
+				      	<td>1<input name="rectangle_x" type="number" step=any required="required"/></td>
+				      	<td>2<input name="rectangle_x" type="number" step=any required="required"/></td>
+				      	<td>3<input name="rectangle_x" type="number" step=any required="required"/></td>
+				      	<td>4<input name="rectangle_x" type="number" step=any required="required"/></td>
+				      	<td>5<input name="rectangle_x" type="number" step=any required="required"/></td>
+				      	<td>6<input name="rectangle_x" type="number" step=any required="required"/></td>
+				      	<td>7<input name="rectangle_x" type="number" step=any required="required"/></td>
+				      	<td>8<input name="rectangle_x" type="number" step=any required="required"/></td>
+				      </tr>
+				      <tr>
+				      	<td>Y</td>
+				      	<td>1<input name="rectangle_y" type="number" step=any required="required"/></td>
+				      	<td>2<input name="rectangle_y" type="number" step=any required="required"/></td>
+				      	<td>3<input name="rectangle_y" type="number" step=any required="required"/></td>
+				      	<td>4<input name="rectangle_y" type="number" step=any required="required"/></td>
+				      	<td>5<input name="rectangle_y" type="number" step=any required="required"/></td>
+				      	<td>6<input name="rectangle_y" type="number" step=any required="required"/></td>
+				      	<td>7<input name="rectangle_y" type="number" step=any required="required"/></td>
+				      	<td>8<input name="rectangle_y" type="number" step=any required="required"/></td>
+				      </tr>
+				      <tr>
+				      	<td>Z</td>
+				      	<td>1<input name="rectangle_z" type="number" step=any required="required"/></td>
+				      	<td>2<input name="rectangle_z" type="number" step=any required="required"/></td>
+				      	<td>3<input name="rectangle_z" type="number" step=any required="required"/></td>
+				      	<td>4<input name="rectangle_z" type="number" step=any required="required"/></td>
+				      	<td>5<input name="rectangle_z" type="number" step=any required="required"/></td>
+				      	<td>6<input name="rectangle_z" type="number" step=any required="required"/></td>
+				      	<td>7<input name="rectangle_z" type="number" step=any required="required"/></td>
+				      	<td>8<input name="rectangle_z" type="number" step=any required="required"/></td>
+				      </tr>
+				      <tr>
+				      	<td>Color </td><td>R<input type="number" name="color_r" value="0" step="1"/></td><td>G<input type="number" name="color_g" value="0" step="1"/></td><td>B<input type="number" name="color_b" value="0" step="1"/></td>
+				      </td>
+				      <tr>
+				      	<td>Reflectivity</td>
+				      	<td>0 to 10<input type="number" name="reflectivity" value="0" min="0" max="10" step="1"/></td><tr/>
+				      </tr>
+				    </table>
+				</div>    
+			</div>   
+			<div id="sphere_forms">
+				<div id="sphere_form1">
+					<hr/>
+				    Sphere <span class="figure_id">1</span></br>
+				    <table>
+				      <tr>
+					      <td>Radius</td><td><input type="number" step="any" name="radius" value="1.0" min="1.0" required="required"/></td>
+					  </tr>
+					  <tr>
+				      	<td>Center</td>
+				      	<td>X<input type="number" step=any name="center_x" required="required"/></td>
+				      	<td>Y<input type="number" step=any name="center_y" required="required"/></td>
+				      	<td>Z<input type="number" step=any name="center_z" required="required"/></td>
+				      </tr>
+				      <tr>
+				      	<td>Color </td><td>R<input type="number" name="color_r" value="0" step="1" /></td><td>G<input type="number" name="color_g" value="0" step="1"/></td><td>B<input type="number" name="color_b" value="0" step="1"/></td>
+				      </td>
+				      <tr>
+				      	<td>Reflectivity</td>
+				      	<td>0 to 10<input type="number" name="reflectivity" value="0" min="0" max="10" step="1"/></td><tr/>
+				      </tr>
+				    </table>
+				</div>
+			</div>   
+			<div id="triangle_forms">
+				<div id="triangle_form1">
+					<hr/>
+				    Triangle <span class="figure_id">1</span></br>
+				    <table>
+					  <tr>
+				      	<td>X</td>
+				      	<td>1<input name="triangle_x"type="number" step=any required="required"/></td>
+				      	<td>2<input name="triangle_x"type="number" step=any required="required"/></td>
+				      	<td>3<input name="triangle_x" type="number" step=any required="required"/></td>
+				      </tr>
+				       <tr>
+				      	<td>Y</td>
+				      	<td>1<input name="triangle_y" type="number" step=any required="required"/></td>
+				      	<td>2<input name="triangle_y" type="number" step=any required="required"/></td>
+				      	<td>3<input name="triangle_y" type="number" step=any required="required"/></td>
+				      </tr>
+				       <tr>
+				      	<td>Z</td>
+				      	<td>1<input name="triangle_z" type="number" step=any required="required"/></td>
+				      	<td>2<input name="triangle_z" type="number" step=any required="required"/></td>
+				      	<td>3<input name="triangle_z" type="number" step=any required="required"/></td>
+				      </tr>
+				      <tr>
+				      	<td>Color </td><td>R<input type="number" name="color_r" value="0" step="1"/></td><td>G<input type="number" name="color_g" value="0" step="1" /></td><td>B<input type="number" name="color_b" value="0" step="1"/></td>
+				      </td>
+				      <tr>
+				      	<td>Reflectivity</td>
+				      	<td>0 to 10<input type="number" name="reflectivity" value ="0" min="0" max="10" step="1"/></td><tr/>
+				      </tr>
+				    </table>
+				</div>   
+			</div>
+			<hr/>
+			<input  type="submit" value="GENERATE"/> 
   		</form>
 	</div>
 {% endblock %}

@@ -1,7 +1,7 @@
 #! python3
 from app import webapp
-import app.db_util
-import app.login
+# import app.db_util
+# import app.login
 import boto3
 from flask import g,session,request,render_template,redirect,url_for
 @webapp.route('/')
@@ -49,23 +49,13 @@ def dashboard():
     #TODO:get past user request
     return render_template("dashboard.html")
 
-@webapp.route("/generateForm", methods=["GET", "POST"])
-def generateForm():
+@webapp.route("/form", methods=["GET", "POST"])
+def form():
     if request.method == 'GET':
-        return render_template("generateForm.html")
+        return render_template("form.html")
     else:
-        rectangles=request.form['rectangle']
-        spheres=request.form['sphere']
-        triangles=request.form['triangle']
-        figures = [rectangles, spheres, triangles]
         return 
     
-
-
-@webapp.route("/form")
-def form(figures):
-    return render_template("form.html")
-
 
 @webapp.route("/request",methods=["GET",'POST'])
 def render_request():
