@@ -1,5 +1,6 @@
 """Database library. Read, query and put """
 from __future__ import print_function
+import datetime
 import os
 import boto3
 from boto3.dynamodb.conditions import Attr
@@ -43,18 +44,24 @@ def get_user_requests(username):
         structure:
         {
             'stat': [str] -> status of this request, must be either 'pending','failed', or 'success',
-            'user': [str] -> username
-            'requestID': [str] -> unique ID (and file name) of rendered image, file extension included
+            'username': [str] -> username
+            'requestID': [str] -> unique ID (and file name) of rendered image, file extension included,
+            'timestamp': [str] -> time stamp as YYMMDDhhmmss (20171125121530 -> 2017-11-25 12:25:30)
         }
     """
 
-    response= req_table.scan(FilterExpression=Attr("user").eq(username))
+    response= req_table.scan(FilterExpression=Attr("username").eq(username))
     return response['Items']
 
 def insert_pending_user_request(username,requestID):
+    #get timestamp
+    cur_time=datetime.datetime.now()
+    timestamp=cur_time.strftime("%Y%m%d%H%M%S")
+
     entry = { "requestID":requestID,
-    "user":username,
-    'stat':'pending'
+    "username":username,
+    'stat':'pending',
+    'timestamp':timestamp
     }
     req_table.put_item(Item=entry)
 

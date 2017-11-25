@@ -1,8 +1,9 @@
-#! python3
-from app import webapp
- import app.db_util
- import app.login
+
 import json, uuid
+from app import webapp
+import app.db_util
+import app.login
+
 from flask import session, request, render_template, redirect, url_for
 @webapp.route('/')
 @webapp.route('/index')
@@ -47,7 +48,9 @@ def dashboard():
         return redirect(url_for('index'))
 
     #TODO:get past user request
-    return render_template("dashboard.html")
+    result=app.db_util.get_user_requests(session['username'])
+    
+    return render_template("dashboard.html",username=session['username'],result=str(result))
 
 @webapp.route("/form", methods=["GET", "POST"])
 def form():
@@ -61,8 +64,12 @@ def form():
             "entities":json.loads(entities)   
         }
         print(d)
-        return 
+        return str(d)
     
+@webapp.route('/logout')
+def logout():
+    session.pop('username',None)
+    return redirect(url_for('index'))
 
 @webapp.route("/request",methods=["GET",'POST'])
 def render_request():
