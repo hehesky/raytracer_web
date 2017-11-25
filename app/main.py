@@ -59,11 +59,12 @@ def form():
     else:
         entities = request.form['output_json']
         print(entities)
+        entities=str(entities)
         d={
-            'id': str(uuid.uuid4())[:18] +".jpg",
+            'id': str(uuid.uuid4())[:18] +".png",
             "entities":json.loads(entities)   
         }
-        print(d)
+        
         return str(d)
     
 @webapp.route('/logout')
