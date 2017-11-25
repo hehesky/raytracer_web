@@ -58,9 +58,7 @@ def form():
         print(entities)
         d={
             'id': str(uuid.uuid4())[:18] +".jpg",
-            "entities":[
-                json.loads(entities)
-            ]
+            "entities":json.loads(entities)   
         }
         print(d)
         return 
