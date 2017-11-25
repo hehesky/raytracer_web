@@ -1,5 +1,5 @@
-
-import json, uuid
+import json
+import uuid
 from app import webapp
 import app.db_util
 import app.login
@@ -69,8 +69,8 @@ def form():
         #insert pending request to db
         app.db_util.insert_pending_user_request(session['username'],d['id'])
         #invoke lambda function
-        app.lambda_lib.invoke_render(d)
-
+        invoke_render(d)
+        
         return redirect(url_for('dashboard'))
     
 @webapp.route('/logout')
