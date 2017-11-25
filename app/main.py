@@ -1,9 +1,9 @@
 #! python3
 from app import webapp
-# import app.db_util
-# import app.login
-import boto3, json, uuid
-from flask import g,session,request,render_template,redirect,url_for
+ import app.db_util
+ import app.login
+import json, uuid
+from flask import session, request, render_template, redirect, url_for
 @webapp.route('/')
 @webapp.route('/index')
 def index():
