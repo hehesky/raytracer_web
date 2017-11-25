@@ -54,11 +54,6 @@ function getRectangles(number){
 			"A": points[0],
 			"B": points[1],
 			"C": points[2], 
-			"D": points[3], 
-			"E": points[4], 
-			"F": points[5], 
-			"G": points[6], 
-			"H": points[7], 
 			"reflectivity": form.find("input[name='reflectivity']").val(),
 			"color": colorR +','+ colorG +','+ colorB
 		};
