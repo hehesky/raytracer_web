@@ -3,8 +3,10 @@ import json, uuid
 from app import webapp
 import app.db_util
 import app.login
+from app.lambda_lib import invoke_render
 
 from flask import session, request, render_template, redirect, url_for
+
 @webapp.route('/')
 @webapp.route('/index')
 def index():
@@ -58,14 +60,18 @@ def form():
         return render_template("form.html")
     else:
         entities = request.form['output_json']
-        print(entities)
+        
         entities=str(entities)
         d={
             'id': str(uuid.uuid4())[:18] +".png",
             "entities":json.loads(entities)   
         }
-        
-        return str(d)
+        #insert pending request to db
+        app.db_util.insert_pending_user_request(session['username'],d['id'])
+        #invoke lambda function
+        app.lambda_lib.invoke_render(d)
+
+        return redirect(url_for('dashboard'))
     
 @webapp.route('/logout')
 def logout():
