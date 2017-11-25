@@ -6,7 +6,7 @@ from pyrt.camera import PerspectiveCamera
 from pyrt.light import PointLight
 def parseSphere(entity):
     """process a dictionary (entity) containing 
-    info about a sphere and return a pyrt.gemetry.Sphere() object
+    info about a sphere and return a pyrt.geometry.Sphere() object
     
     entity=
     {
