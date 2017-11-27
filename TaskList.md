@@ -47,8 +47,8 @@ Deadline: 2017-11-30 (demo)
 ## S3
 - [x] Set up new bucket
 - [X] Upload file to S3 (with boto3) [status: base library done]
-- [ ] Integrate with Renderer
-- [ ] Integrate into Back End
+- [x] Integrate with Renderer
+- [x] Integrate into Back End
 
 ## Local Test
 - [ ] Test on localhost
