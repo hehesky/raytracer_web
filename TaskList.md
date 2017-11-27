@@ -42,7 +42,8 @@ Deadline: 2017-11-30 (demo)
 - [x] Set up new table
 - [x] Query table for information (with boto3)
 - [x] Store/update information (with boto3)
-- [ ] Integrate into Back End [status: integrated with login library]
+- [ ] Get public requests
+- [x] Integrate into Back End [status: integrated with login library]
 
 ## S3
 - [x] Set up new bucket
