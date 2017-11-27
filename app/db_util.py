@@ -46,14 +46,18 @@ def get_user_requests(username):
             'stat': [str] -> status of this request, must be either 'pending','failed', or 'success',
             'username': [str] -> username
             'requestID': [str] -> unique ID (and file name) of rendered image, file extension included,
-            'timestamp': [str] -> time stamp as YYMMDDhhmmss (20171125121530 -> 2017-11-25 12:25:30)
+            'timestamp': [str] -> time stamp as YYMMDDhhmmss (20171125121530 -> 2017-11-25 12:25:30),
+            'ownership': [str] -> 'public' or 'private'
         }
     """
 
     response= req_table.scan(FilterExpression=Attr("username").eq(username))
     return response['Items']
+def get_public_request():
+    response= req_table.scan(FilterExpression=Attr("ownership").eq('public'))
+    return response['Items']
 
-def insert_pending_user_request(username,requestID):
+def insert_pending_user_request(username,requestID,ownership="private"):
     #get timestamp
     cur_time=datetime.datetime.now()
     timestamp=cur_time.strftime("%Y%m%d%H%M%S")
@@ -61,7 +65,8 @@ def insert_pending_user_request(username,requestID):
     entry = { "requestID":requestID,
     "username":username,
     'stat':'pending',
-    'timestamp':timestamp
+    'timestamp':timestamp,
+    'ownership':ownership
     }
     req_table.put_item(Item=entry)
 
