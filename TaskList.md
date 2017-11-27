@@ -16,7 +16,7 @@ Deadline: 2017-11-30 (demo)
   - [x] Parse Triangle
   - [x] Parse other type of objects
   - [x] Unit test
-- [ ] Render 3D image (pyrt)
+- [x] Render 3D image (pyrt)
   - [x] Scene and Camera
   - [x] Rendering Sphere
   - [x] Rendering Triangle
@@ -26,15 +26,17 @@ Deadline: 2017-11-30 (demo)
 - [x] Fetching results
 
 ## Front End Dev (html,css,js,etc.)
-- [ ] Index page
+- [x] Index page
 - [ ] Login page (and form)
   - [x] Bare-bone page
+  - [ ] Login failed page
 - [ ] User dashboard page (displaying fetched results)
   - [x] Bare-bone dashboard
+  - [ ] Polish
 - [ ] Request page & request form (include pre-processing logic in js)
   - [x] allow adding/removing objects (that will be rendered) in the form
   - [x] provide different type of inputs for different type of objects
-
+  - [ ] 
 ## DynamoDb
 - [x] Set up new table
 - [x] Query table for information (with boto3)
