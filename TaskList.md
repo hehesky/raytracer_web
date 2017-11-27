@@ -33,10 +33,11 @@ Deadline: 2017-11-30 (demo)
 - [ ] User dashboard page (displaying fetched results)
   - [x] Bare-bone dashboard
   - [ ] Polish
+   - [ ] Logout button
 - [ ] Request page & request form (include pre-processing logic in js)
   - [x] allow adding/removing objects (that will be rendered) in the form
   - [x] provide different type of inputs for different type of objects
-  - [ ] 
+  - [ ] set public or private
 ## DynamoDb
 - [x] Set up new table
 - [x] Query table for information (with boto3)
