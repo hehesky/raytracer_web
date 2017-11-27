@@ -3,5 +3,24 @@
 {% block body %}
 <p style="color:rgb(197, 188, 188)">hello {{username}}</p>
 
+<table>
+    <tr>
+        <td>Time Stamp</td>
+        <td>Status</td>
+        <td>result</td>
+    </tr>
+    {% for req in requests %}
+    <tr>
+        <td>{{req['timestamp']}}</td>
+        <td>{{req['stat']}}</td>
+        {% if req['stat']|string() =="success" %}
+        <td><img src="https://s3.us-east-2.amazonaws.com/rtweb-9468/{{req['requestID']}}" /></td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+
+
+</table>
+
 {{result}}
 {% endblock %}

@@ -4,36 +4,36 @@ Deadline: 2017-11-30 (demo)
 
 
 ## Back End Dev (Flask)
-- [ ] Logic for index page
-- [ ] Logic for user log-in and session management 
+- [x] Logic for index page
+- [x] Logic for user log-in and session management 
 	- [x] password salting
 	- [x] Login library
-	- [ ] Integrate with front end
-- [ ] Parsing render request (from user) [required data interface to be determined]
+	- [x] Integrate with front end
+- [x] Parsing render request (from user) [required data interface to be determined]
   - [x] Parse Sphere object info (center, radius, color, reflectivity)
   - [ ] ~~Parse Camera info~~ [cancelled]
-  - [ ] Parse Light Source info
+  - [x] Parse Light Source info
   - [x] Parse Triangle
-  - [ ] Parse other type of objects
-  - [ ] Unit test
+  - [x] Parse other type of objects
+  - [x] Unit test
 - [ ] Render 3D image (pyrt)
   - [x] Scene and Camera
   - [x] Rendering Sphere
-  - [ ] Rendering Triangle
-  - [ ] Rendering other objects
-  - [ ] Unit test
-  - [ ] Create a separate Lambda function for rending  
-- [ ] Fetching results
+  - [x] Rendering Triangle
+  - [x] Rendering other objects
+  - [x] Unit test
+  - [x] Create a separate Lambda function for rending  
+- [x] Fetching results
 
 ## Front End Dev (html,css,js,etc.)
 - [ ] Index page
 - [ ] Login page (and form)
-  - [ ] Bare-bone page
+  - [x] Bare-bone page
 - [ ] User dashboard page (displaying fetched results)
-  - [ ] Bare-bone dashboard
+  - [x] Bare-bone dashboard
 - [ ] Request page & request form (include pre-processing logic in js)
-  - [ ] allow adding/removing objects (that will be rendered) in the form
-  - [ ] provide different type of inputs for different type of objects
+  - [x] allow adding/removing objects (that will be rendered) in the form
+  - [x] provide different type of inputs for different type of objects
 
 ## DynamoDb
 - [x] Set up new table

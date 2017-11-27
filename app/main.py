@@ -52,7 +52,7 @@ def dashboard():
     #TODO:get past user request
     result=app.db_util.get_user_requests(session['username'])
     
-    return render_template("dashboard.html",username=session['username'],result=str(result))
+    return render_template("dashboard.html",username=session['username'],requests=result)
 
 @webapp.route("/form", methods=["GET", "POST"])
 def form():
