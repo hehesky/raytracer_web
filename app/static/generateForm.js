@@ -3,7 +3,7 @@ function makeJson(){
 	var rectangles = parseInt(rectangle_num.val()), 
 	spheres = parseInt(sphere_num.val()), 
 	triangles = parseInt(triangle_num.val()),
-	json = [], r_json = '', s_json = '', t_json = '', light_json='';
+	json = [], r_json = '', s_json = '', t_json = '', light_json='', camera_json='';
 	
 	if (rectangles + spheres + triangles <= 0) {
 		error.innerHTML = 'Please add figures.';
@@ -33,13 +33,13 @@ function makeJson(){
 	width = $("input[name='image_width']").val();
 	height = $("input[name='image_height']").val();
 	
-	light_json = {'type':'light', 'position': light_x +','+ light_y +','+ light_z}
+	light_json = {'type':'light', 'position': light_x +','+ light_y +','+ light_z};
 	camera_json = {'type':'camera',
 		'position':camera_x1 +','+ camera_y1 +','+ camera_z1,
 		'center':camera_x2 +','+ camera_y2 +','+ camera_z2,
 		'width': width,
 		'height': height
-	}
+	};
 	
 	json = [r_json, s_json, t_json];
 	json.push(JSON.stringify(light_json));
