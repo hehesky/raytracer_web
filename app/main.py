@@ -4,7 +4,7 @@ from app import webapp
 import app.db_util
 import app.login
 from app.lambda_lib import invoke_render
-
+from operator import itemgetter
 from flask import session, request, render_template, redirect, url_for
 
 @webapp.route('/')
@@ -50,8 +50,8 @@ def dashboard():
         return redirect(url_for('index'))
 
     #TODO:get past user request
-    result=app.db_util.get_user_requests(session['username'])
-    
+    result=sorted(app.db_util.get_user_requests(session['username']), key=itemgetter('timestamp'), reverse=True)
+    print(result)
     return render_template("dashboard.html",username=session['username'],requests=result)
 
 @webapp.route("/public")
@@ -60,7 +60,7 @@ def public_images():
         return redirect(url_for('index'))
 
     #TODO:get past user request
-    result=app.db_util.get_public_request()
+    result=sorted(app.db_util.get_public_request(), key=itemgetter('timestamp'), reverse=True)
     
     return render_template("public.html",username=session['username'],requests=result)
 
@@ -101,6 +101,7 @@ def form():
         }
         
         ownership = request.form['ownership']
+        print(d)
         #insert pending request to db
         app.db_util.insert_pending_user_request(session['username'],d['id'], ownership)
         #invoke lambda function

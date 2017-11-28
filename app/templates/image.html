@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Image{% endblock %}
+{% block body %}
+
+<div style="text-align: center;"><img src="https://s3.us-east-2.amazonaws.com/rtweb-9468/{{image_id}}" /></div>
+<br/>
+<button type="button" style="margin-top:10px;" class="btn btn-primary btn-block btn-large" onclick="location.href='/dashboard'">RETURN TO DASHBOARD</button>
+{% endblock %}

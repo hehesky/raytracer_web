@@ -25,10 +25,28 @@
 				  <td><input  type="submit" value="-" onclick="decrementForm(2);"></td>
 		  		</tr>
   		  	</table>	
-		
+			<hr/>
 	    <form id="form" onload="initializeForms()" onsubmit="return makeJson()" method="POST">
-	    	<div id="light_form">
+	    	<div id="image_form">
 		    	<table>
+					<tr>
+						<td>Image Size</td>
+						<td>Width<input name="image_width" type="number" value ="400" min="400" max="800" step=any required="required"/></td>
+						<td>Height<input name="image_height" type="number" value ="300" min="300" max="600" step=any required="required"/></td>
+						<td></td>
+					</tr>	
+					<tr>
+						<td>Camera Postion</td>
+						<td>X<input name="camera_x1" type="number" value ="0" step=any required="required"/></td>
+						<td>Y<input name="camera_y1" type="number" value ="-10" step=any required="required"/></td>
+						<td>Z<input name="camera_z1" type="number" value ="10" step=any required="required"/></td>
+					</tr>
+					<tr>	
+						<td>Camera Center</td>
+						<td>X<input name="camera_x2" type="number" value ="0" step=any required="required"/></td>
+						<td>Y<input name="camera_y2" type="number" value ="0" step=any required="required"/></td>
+						<td>Z<input name="camera_z2" type="number" value ="0" step=any required="required"/></td>
+					</tr>	
 					<tr>
 						<td>Light Position</td>
 						<td>X<input name="light_x" type="number" value ="1" step=any required="required"/></td>
@@ -77,11 +95,11 @@
 				      	<td>3<input name="rectangle_z" type="number" step=any required="required"/></td>
 				      </tr>
 				      <tr>
-				      	<td>Color </td><td>R<input type="number" name="color_r" value="0" step="any"/></td><td>G<input type="number" name="color_g" value="0" step="any"/></td><td>B<input type="number" name="color_b" value="0" step="any"/></td>
+				      	<td>Color </td><td>R<input type="number" name="color_r" value="0" step="any" min="0" max="255" required/></td><td>G<input type="number" name="color_g" value="0" step="any" min="0" max="255" required/></td><td>B<input type="number" name="color_b" value="0" min="0" max="255" step="any" required/></td>
 				      </td>
 				      <tr>
 				      	<td>Reflectivity</td>
-				      	<td>0 to 1<input type="number" name="reflectivity" value="0.0" min="0.0" max="1.0" step="0.1"/></td><tr/>
+				      	<td>0 to 1<input type="number" name="reflectivity" value="0.0" min="0.0" max="1.0" step="0.1" required/></td><tr/>
 				      </tr>
 				    </table>
 				</div>    
@@ -101,11 +119,11 @@
 				      	<td>Z<input type="number" step=any name="center_z" required="required"/></td>
 				      </tr>
 				      <tr>
-				      	<td>Color </td><td>R<input type="number" name="color_r" value="0" step="any" /></td><td>G<input type="number" name="color_g" value="0" step="any"/></td><td>B<input type="number" name="color_b" value="0" step="any"/></td>
+				      	<td>Color </td><td>R<input type="number" name="color_r" value="0" step="any" min="0" max="255" required/></td><td>G<input type="number" name="color_g" value="0" step="any" min="0" max="255" required/></td><td>B<input type="number" name="color_b" value="0" step="any" min="0" max="255" required/></td>
 				      </td>
 				      <tr>
 				      	<td>Reflectivity</td>
-				      	<td>0 to 1<input type="number" name="reflectivity" value="0.0" min="0.0" max="1.0" step="0.1"/></td><tr/>
+				      	<td>0 to 1<input type="number" name="reflectivity" value="0.0" min="0.0" max="1.0" step="0.1" required/></td><tr/>
 				      </tr>
 				    </table>
 				</div>
@@ -134,7 +152,7 @@
 				      	<td>3<input name="triangle_z" type="number" step=any required="required"/></td>
 				      </tr>
 				      <tr>
-				      	<td>Color </td><td>R<input type="number" name="color_r" value="0" step="any"/></td><td>G<input type="number" name="color_g" value="0" step="any" /></td><td>B<input type="number" name="color_b" value="0" step="any"/></td>
+				      	<td>Color </td><td>R<input type="number" name="color_r" min="0" max="255" value="0" step="any" required/></td><td>G<input type="number" name="color_g" value="0" min="0" max="255" step="any" required/></td><td>B<input type="number" name="color_b" value="0" min="0" max="255" step="any" required/></td>
 				      </td>
 				      <tr>
 				      	<td>Reflectivity</td>

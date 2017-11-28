@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Public Image{% endblock %}
+{% block body %}
+<p style="color:rgb(197, 188, 188); text-align: center;">Public Images</p>
+
+{% if requests%}
+<table class="public_table">
+    <tr>
+        <td>Time Stamp</td>
+        <td>Status</td>
+        <td>Owner</td>
+        <td>Result</td>
+    </tr>
+    {% for req in requests %}
+    <tr>
+        <td>{{req['timestamp']}}</td>
+        <td>{{req['stat']}}</td>
+        <td>{{req['username']}}</td>
+        {% if req['stat']|string() =="success" %}
+        <td><a style="color:white;" href='/image/{{req['requestID']}}'>Click to see image</a></td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+
+</table>
+{% else %}
+	<p class="error_message">No public images yet.</p>
+{% endif %}
+<button class="btn btn-primary btn-block btn-large" onclick="location.href='/dashboard'">RETURN TO DASHBOARD</button> 
+<button type="button" class="btn btn-primary btn-block btn-large" onclick="location.href='/logout'">LOGOUT</button>
+
+{{result}}
+{% endblock %}
