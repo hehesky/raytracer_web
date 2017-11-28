@@ -14,7 +14,9 @@
     </tr>
     {% for req in requests %}
     <tr>
-        <td>{{req['timestamp']}}</td>
+        <td>
+            {{req['timestamp'][:4]}}-{{req['timestamp'][4:6]}}-{{req['timestamp'][6:8]}} {{req['timestamp'][8:10]}}:{{req['timestamp'][10:12]}}:{{req['timestamp'][12:]}}
+        </td>
         <td>{{req['stat']}}</td>
         <td>{{req['ownership']}}</td>
         <td>

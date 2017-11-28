@@ -51,7 +51,7 @@ def dashboard():
 
     #TODO:get past user request
     result=sorted(app.db_util.get_user_requests(session['username']), key=itemgetter('timestamp'), reverse=True)
-    print(result)
+    
     return render_template("dashboard.html",username=session['username'],requests=result)
 
 @webapp.route("/public")
