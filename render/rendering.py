@@ -35,6 +35,7 @@ def lambda_handler(event,context):
     """event is a json object"""
     #try:
     ents=obj_parser.parse(event)
+    print(ents)
     image = render(ents)
     try:
     	im = Image.fromarray(image.data)
@@ -46,12 +47,12 @@ def lambda_handler(event,context):
     ext=ext[1:]
     if ext in ('jpg','JPG'):
         ext='jpeg'
-    im.save(buf,ext)
-    buf.seek(0)
-    upload_file_obj(buf,ents['id']) #upload to S3
+    im.save('1.png')#im.save(buf,ext)
+    #buf.seek(0)
+    #upload_file_obj(buf,ents['id']) #upload to S3
 
     #set db record status to success
-    db_util.set_request_stat(ents['id'],'success')
+    #db_util.set_request_stat(ents['id'],'success')
 #except:
     #set db record status to failed
     #db_util.set_request_stat(ents['id'],'failed')
