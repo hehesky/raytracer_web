@@ -28,7 +28,7 @@ def login():
             session['username']=username
             return redirect(url_for('dashboard'))
         else:
-            return render_template("login_fail.html")
+            return render_template("login.html", message="Account does not exist. Please try again.")
              
 @webapp.route('/register',methods=["GET","POST"])
 def register():
@@ -42,7 +42,7 @@ def register():
             session['username']=username
             return redirect(url_for('dashboard'))
         else:
-            return "Username not available"
+            return render_template("register.html", message="Username not available. Please try another username.") 
         
 @webapp.route("/dashboard")
 def dashboard():
@@ -53,6 +53,25 @@ def dashboard():
     result=app.db_util.get_user_requests(session['username'])
     
     return render_template("dashboard.html",username=session['username'],requests=result)
+
+@webapp.route("/public")
+def public_images():
+    if 'username' not in session:
+        return redirect(url_for('index'))
+
+    #TODO:get past user request
+    result=app.db_util.get_public_request()
+    
+    return render_template("public.html",username=session['username'],requests=result)
+
+
+@webapp.route("/image/<image_id>")
+def imagePage(image_id):
+    if not image_id:
+        return redirect(url_for('dashboard'))
+
+    return render_template("image.html",image_id=image_id)
+
 
 @webapp.route("/form", methods=["GET", "POST"])
 def form():
@@ -66,8 +85,10 @@ def form():
             'id': str(uuid.uuid4())[:18] +".png",
             "entities":json.loads(entities)   
         }
+        
+        ownership = request.form['ownership']
         #insert pending request to db
-        app.db_util.insert_pending_user_request(session['username'],d['id'])
+        app.db_util.insert_pending_user_request(session['username'],d['id'], ownership)
         #invoke lambda function
         invoke_render(d)
         

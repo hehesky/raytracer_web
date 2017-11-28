@@ -10,6 +10,7 @@ try:
     DB_ACCESS_KEY = os.environ["DB_ACCESS_KEY"]
     DB_SECRET = os.environ["DB_SECRET"]
 
+
 except KeyError:
     raise EnvironmentError("DynamoDB related environment variable unavailable")
 finally:
@@ -53,6 +54,7 @@ def get_user_requests(username):
 
     response= req_table.scan(FilterExpression=Attr("username").eq(username))
     return response['Items']
+
 def get_public_request():
     response= req_table.scan(FilterExpression=Attr("ownership").eq('public'))
     return response['Items']
@@ -63,10 +65,10 @@ def insert_pending_user_request(username,requestID,ownership="private"):
     timestamp=cur_time.strftime("%Y%m%d%H%M%S")
 
     entry = { "requestID":requestID,
-    "username":username,
-    'stat':'pending',
-    'timestamp':timestamp,
-    'ownership':ownership
+        "username":username,
+        'stat':'pending',
+        'timestamp':timestamp,
+        'ownership':ownership
     }
     req_table.put_item(Item=entry)
 

@@ -7,7 +7,7 @@ function makeJson(){
 	
 	if (rectangles + spheres + triangles <= 0) {
 		error.innerHTML = 'Please add figures.';
-		return '';
+		return false;
 	}
 	
 	if (rectangles > 0){
@@ -27,6 +27,7 @@ function makeJson(){
 	json.push(JSON.stringify(light_json));
 	json = json.filter(function(string){ return string != '' });
 	$("input[name='output_json']").val('[' + json.join(", ")+ ']');
+	return true;
 }
 
 function getRectangles(number){
