@@ -72,6 +72,14 @@ def insert_pending_user_request(username,requestID,ownership="private"):
     }
     req_table.put_item(Item=entry)
 
+def delete_request(username, requestID):
+    req_table.delete_item(
+        Key={
+            'requestID': requestID,
+        }
+    )
+     
+
 def set_request_stat(requestID,status):
     assert status in ["failed",'pending','success']
     req_table.update_item(Key={"requestID":requestID},

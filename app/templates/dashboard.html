@@ -10,15 +10,21 @@
         <td>Status</td>
         <td>Ownership</td>
         <td>Result</td>
+        <td>Delete Image</td>
     </tr>
     {% for req in requests %}
     <tr>
         <td>{{req['timestamp']}}</td>
         <td>{{req['stat']}}</td>
         <td>{{req['ownership']}}</td>
+        <td>
         {% if req['stat']|string() =="success" %}
-        <td><a style="color:white;" href='/image/{{req['requestID']}}'>Click to see image</a></td>
+        <a style="color:white;" href='/image/{{req['requestID']}}'>Click to see image</a>
         {% endif %}
+        </td>
+        <td>
+        <button class="btn-block" onclick="location.href='/delete/{{req['requestID']}}'">Delete</button>
+        </td>
     </tr>
     {% endfor %}
 </table>

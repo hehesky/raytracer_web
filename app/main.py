@@ -72,9 +72,23 @@ def imagePage(image_id):
 
     return render_template("image.html",image_id=image_id)
 
+@webapp.route("/delete/<image_id>")
+def delete(image_id):
+    if 'username' not in session:
+        return redirect(url_for('index'))
+    print(image_id)
+    print(session['username'])
+    
+    result=app.db_util.delete_request(session['username'], image_id)
+    
+    return render_template("dashboard.html",username=session['username'],requests=result)
+
 
 @webapp.route("/form", methods=["GET", "POST"])
 def form():
+    if 'username' not in session:
+        return redirect(url_for('index'))
+    
     if request.method == 'GET':
         return render_template("form.html")
     else:
