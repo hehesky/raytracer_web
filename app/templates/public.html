@@ -17,7 +17,9 @@
         <td>{{req['stat']}}</td>
         <td>{{req['username']}}</td>
         {% if req['stat']|string() =="success" %}
-        <td><a style="color:white;" href='/image/{{req['requestID']}}'>Click to see image</a></td>
+        <td>
+        <button class="button btn-block" onclick="location.href='/image/{{req['requestID']}}'">See Image</button>
+        </td>
         {% endif %}
     </tr>
     {% endfor %}

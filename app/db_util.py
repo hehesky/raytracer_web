@@ -55,11 +55,18 @@ def get_user_requests(username):
     response= req_table.scan(FilterExpression=Attr("username").eq(username))
     return response['Items']
 
+def get_image_entities(image_id):
+    response= req_table.get_item(Key={'requestID':image_id})
+    
+    if 'Item' not in response:
+        return None
+    return response['Item']
+
 def get_public_request():
     response= req_table.scan(FilterExpression=Attr("ownership").eq('public'))
     return response['Items']
 
-def insert_pending_user_request(username,requestID,ownership="private"):
+def insert_pending_user_request(username,requestID, entities,ownership="private"):
     #get timestamp
     cur_time=datetime.datetime.now()
     timestamp=cur_time.strftime("%Y%m%d%H%M%S")
@@ -68,10 +75,27 @@ def insert_pending_user_request(username,requestID,ownership="private"):
         "username":username,
         'stat':'pending',
         'timestamp':timestamp,
-        'ownership':ownership
+        'ownership':ownership,
+        'entities': entities
     }
     req_table.put_item(Item=entry)
 
+def update_request(username, requestID, ownership):
+    if ownership == 'public':
+        newOwnership = 'private'
+    elif ownership == 'private':
+        newOwnership = 'public'
+        
+    req_table.update_item(
+        Key={
+            'requestID': requestID
+        },
+        UpdateExpression= "set ownership = :o",
+        ExpressionAttributeValues={
+            ":o": newOwnership,
+        }
+    )
+    
 def delete_request(username, requestID):
     req_table.delete_item(
         Key={

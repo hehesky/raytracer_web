@@ -65,12 +65,31 @@ def public_images():
     return render_template("public.html",username=session['username'],requests=result)
 
 
+@webapp.route("/updateOwnership/", methods=['GET'])
+def updateOwnership():
+    if 'username' not in session:
+        return redirect(url_for('index'))
+    
+    image_id = request.args.get('image_id')
+    ownership = request.args.get('ownership')
+    print(ownership)
+    result = app.db_util.update_request(session['username'], image_id, ownership)
+       
+    return redirect(url_for('dashboard'))
+
 @webapp.route("/image/<image_id>")
 def imagePage(image_id):
+ 
+    if 'username' not in session:
+        return redirect(url_for('index'))
     if not image_id:
         return redirect(url_for('dashboard'))
-
-    return render_template("image.html",image_id=image_id)
+    result = app.db_util.get_image_entities(image_id)
+    entities = ''
+    if 'entities' in result:
+        entities = sorted(result['entities'], key=itemgetter('type'))
+    
+    return render_template("image.html",image_id=image_id, entities=entities)
 
 @webapp.route("/delete/<image_id>")
 def delete(image_id):
@@ -81,7 +100,7 @@ def delete(image_id):
     
     result=app.db_util.delete_request(session['username'], image_id)
     
-    return render_template("dashboard.html",username=session['username'],requests=result)
+    return redirect(url_for('dashboard'))
 
 
 @webapp.route("/form", methods=["GET", "POST"])
@@ -101,9 +120,8 @@ def form():
         }
         
         ownership = request.form['ownership']
-        print(d)
         #insert pending request to db
-        app.db_util.insert_pending_user_request(session['username'],d['id'], ownership)
+        app.db_util.insert_pending_user_request(session['username'],d['id'], d['entities'], ownership)
         #invoke lambda function
         invoke_render(d)
         

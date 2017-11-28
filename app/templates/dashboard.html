@@ -18,14 +18,14 @@
             {{req['timestamp'][:4]}}-{{req['timestamp'][4:6]}}-{{req['timestamp'][6:8]}} {{req['timestamp'][8:10]}}:{{req['timestamp'][10:12]}}:{{req['timestamp'][12:]}}
         </td>
         <td>{{req['stat']}}</td>
-        <td>{{req['ownership']}}</td>
+        <td><button class="button btn-block" onclick="location.href='/updateOwnership/?image_id={{req['requestID']}}&ownership={{req['ownership']}}'">{{req['ownership']}}</button></td>
         <td>
         {% if req['stat']|string() =="success" %}
-        <a style="color:white;" href='/image/{{req['requestID']}}'>Click to see image</a>
+       		<button class="button btn-block" onclick="location.href='/image/{{req['requestID']}}'">See Image</button>
         {% endif %}
         </td>
         <td>
-        <button class="btn-block" onclick="location.href='/delete/{{req['requestID']}}'">Delete</button>
+        <button class="button btn-block" onclick="location.href='/delete/{{req['requestID']}}'">Delete</button>
         </td>
     </tr>
     {% endfor %}
