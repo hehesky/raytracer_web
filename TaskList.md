@@ -26,23 +26,28 @@ Deadline: 2017-11-30 (demo)
 - [x] Fetching results
 
 ## Front End Dev (html,css,js,etc.)
+- [ ] Finalize css style
 - [x] Index page
-- [ ] Login page (and form)
+- [x] Login page (and form)
   - [x] Bare-bone page
-  - [ ] Login failed page
-- [ ] User dashboard page (displaying fetched results)
+  - [x] Login failed message
+- [x] User dashboard page (displaying fetched results)
   - [x] Bare-bone dashboard
-  - [ ] Polish
-   - [ ] Logout button
-- [ ] Request page & request form (include pre-processing logic in js)
+  - [x] Polish
+   - [x] Logout button
+   - [x] Generate image button
+   - [x] See public images button
+- [x] Public image page
+  - [x] show image owner
+- [x] Request page & request form (include pre-processing logic in js)
   - [x] allow adding/removing objects (that will be rendered) in the form
   - [x] provide different type of inputs for different type of objects
-  - [ ] set public or private
+  - [x] set public or private
 ## DynamoDb
 - [x] Set up new table
 - [x] Query table for information (with boto3)
 - [x] Store/update information (with boto3)
-- [ ] Get public requests
+- [x] Get public requests
 - [x] Integrate into Back End [status: integrated with login library]
 
 ## S3
