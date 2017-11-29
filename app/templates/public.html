@@ -18,7 +18,7 @@
         <td>{{req['username']}}</td>
         {% if req['stat']|string() =="success" %}
         <td>
-        <button class="button btn-block" onclick="location.href='/image/{{req['requestID']}}'">See Image</button>
+        <button class="button btn-block" onclick="location.href='./image/{{req['requestID']}}'">See Image</button>
         </td>
         {% endif %}
     </tr>
@@ -28,8 +28,8 @@
 {% else %}
 	<p class="error_message">No public images yet.</p>
 {% endif %}
-<button class="btn btn-primary btn-block btn-large" onclick="location.href='/dashboard'">RETURN TO DASHBOARD</button> 
-<button type="button" class="btn btn-primary btn-block btn-large" onclick="location.href='/logout'">LOGOUT</button>
+<button class="btn btn-primary btn-block btn-large" onclick="location.href='./dashboard'">RETURN TO DASHBOARD</button> 
+<button type="button" class="btn btn-primary btn-block btn-large" onclick="location.href='./logout'">LOGOUT</button>
 
 {{result}}
 {% endblock %}
