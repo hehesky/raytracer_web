@@ -106,3 +106,8 @@ ENV/
 .jpg
 .jpeg
 *.png
+
+#zip
+.zip
+
+zappa_settings.json
