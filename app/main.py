@@ -86,7 +86,7 @@ def imagePage(image_id):
         return redirect(url_for('dashboard'))
     result = app.db_util.get_image_entities(image_id)
     entities = ''
-    if 'entities' in result:
+    if result and 'entities' in result:
         entities = sorted(result['entities'], key=itemgetter('type'))
     
     return render_template("image.html",image_id=image_id, entities=entities)
