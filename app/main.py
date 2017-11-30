@@ -8,6 +8,9 @@ from operator import itemgetter
 from flask import session, request, render_template, redirect, url_for
 
 @webapp.route('/')
+def main():
+    return redirect(url_for('index'))
+
 @webapp.route('/index')
 def index():
     if 'username' not in session:
