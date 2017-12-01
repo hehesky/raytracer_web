@@ -100,8 +100,7 @@ def parseCamera(entity):
     camera.setView(c_pos,c_center, Vec3(0.,0.,1.))
     return camera
 def parse(request_dic):
-    
-    
+        
     id=request_dic['id']
     entities=request_dic['entities']
     objs=[]
