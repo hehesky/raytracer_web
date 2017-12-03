@@ -158,3 +158,38 @@ Light
 
 Note: Point light at given location. Same as the camera, only one light is allowed. If multiple ones are provided, only the last one is used. If no light is provided, a default one with `center=(0,0,15)` will be used.
 
+## 3 Interesting Observations
+
+###3.1 Zappa Serverless Backend
+Zappa helps packing WSGI web app built with flask, django and many others and deploy them to AWS Lambda. In theory, Zappa should work on all platforms. It appears to be so when deploying a simple "hello-world" type app with no extra libraries other than flask. However, during our attempt to deploy the Raytracer Service from a windows 8.1 machine, various errors occurred and some of them just cannot be fixed. The major one was that the deployed app was unable to import the "builtin" library in "handler" function, meaning that the app wouldn't even start because of this import error.
+
+The cause was (or at least we think so) that some the libraries include artifacts compiled from C. By default Zappa will deploy your app to an Linux-like environment and compiled C binaries are not cross-platform.
+
+Instead, the deploying was eventually done using a Ubuntu virtual machine. Sources on the internet suggest an AMI linux EC2 instance would work as well. But even on Ubuntu errors were still encountered (yet fortunately they were the "fixable" ones).
+
+Known issues are(as of the time writing this document):
+
+1. Zappa cannot find a proper version for package "toml", even when toml version 9.3.1 is installed  
+	Solution: use pip to install an older version `sudo pip install toml==9.2`
+2. Zappa cannot work without a virtual environment.
+	Solution: create a virtual environment with virtualenvwrapper. Then install required packages inside the virtual environment
+3. Unable to deploy with Python3.6
+	Work-around Solution: Since Zappa seems to have many issues with Python3.6, it would be safer to use older version of Python (Python3.5 or Python2.7) until those issues are fixed.
+---
+###3.2 Deploying a function on AWS Lambda
+AWS Lambda introduces an interesting new way of cloud computing. But when actually creating a function, there are many "gotchas" once your function goes beyond the basic hello-world. The official documentations, dare I say, are not very well written - vague, detail-omitting, "dummy-unfriendly". And since Lambda is relatively new, the community knowledge base is not really covering everything. Here are some of the issues we encountered when deploying the raytracing rending engine.
+
+---
+####3.2.1 Only Prepare Deployment Package on Linux System
+The official docs state that you have to include all libraries (except for boto3) in the deploy package. What they did not say was that you have to prepare your package using the same operating system (i.e. a linux system).   
+
+When I first tried to deploy using a windows machine, the lambda function failed on the first instant it was tested. The log showed that it could not load the core of Pillow library. Pillow, being a image processing library, has server C-compiled binaries. So the copy of Pillow I installed on the windows machine is uncompatible with Lambda which uses a Linux environment. 
+
+So always prepare your deploy package on Linux (virtual machine, EC2, etc.)
+
+####3.2.2 Remeber to Properly Set Time-out
+Since our rendering engine is written in Python (meaning it's not lightening fast), the first few tests of the Lambda function failed very quickly. After checking the logs, it was counted as timed out before rendering could finish. The default time-out was only serveral seconds. After increasing that to 120 seconds, everything went on smoothly.
+
+####3.2.3 Issues with Numpy on Lambda
+While testing our rendering engine of Lambda, I found out that Lambda may have issues with numpy (version 1.1.13). By default, our render engine attempts to use Numpy array to store the pixles before dumping them into an image file. On serveral occations Lambda function logs showed that there was an error utilizing Numpy. I bypassed this by allowing the rendering engine to check if numpy is available and uses lists to store pixles when numpy cannot be imported. There are very little discussion about this on the internet, so we have to stick with this work-around for now.
+
