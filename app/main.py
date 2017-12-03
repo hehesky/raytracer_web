@@ -55,7 +55,7 @@ def dashboard():
     #TODO:get past user request
     result=sorted(app.db_util.get_user_requests(session['username']), key=itemgetter('timestamp'), reverse=True)
     
-    return render_template("dashboard.html",username=session['username'],requests=result)
+    return render_template("dashboard.html",page = 'dashboard', username=session['username'],requests=result)
 
 @webapp.route("/public")
 def public_images():
@@ -65,7 +65,7 @@ def public_images():
     #TODO:get past user request
     result=sorted(app.db_util.get_public_request(), key=itemgetter('timestamp'), reverse=True)
     
-    return render_template("public.html",username=session['username'],requests=result)
+    return render_template("public.html",page ='public', username=session['username'],requests=result)
 
 
 @webapp.route("/updateOwnership/", methods=['GET'])
@@ -80,19 +80,32 @@ def updateOwnership():
        
     return redirect(url_for('dashboard'))
 
-@webapp.route("/image/<image_id>")
-def imagePage(image_id):
- 
-    if 'username' not in session:
-        return redirect(url_for('index'))
+@webapp.route("/showImage/", methods=['GET'])
+def showImage():
+    image_id = request.args.get('image_id')
+    page = request.args.get('page')
+   
     if not image_id:
         return redirect(url_for('dashboard'))
+    
+    return redirect(url_for('image', page = page, image_id=image_id))
+
+@webapp.route("/image")
+def image():
+
+    if 'username' not in session:
+        return redirect(url_for('index'))
+    
+    image_id = request.args.get('image_id')
+    page = request.args.get('page')
+    
     result = app.db_util.get_image_entities(image_id)
     entities = ''
     if result and 'entities' in result:
         entities = sorted(result['entities'], key=itemgetter('type'))
     
-    return render_template("image.html",image_id=image_id, entities=entities)
+    return render_template('image.html', page = page, image_id=image_id, result = result, entities=entities)
+
 
 @webapp.route("/delete/<image_id>")
 def delete(image_id):
@@ -112,7 +125,7 @@ def form():
         return redirect(url_for('index'))
     
     if request.method == 'GET':
-        return render_template("form.html")
+        return render_template("form.html", page = 'form')
     else:
         entities = request.form['output_json']
         

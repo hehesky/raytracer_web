@@ -1,41 +1,22 @@
 {% extends "base.html" %}
 {% block title %}Dashboard{% endblock %}
+{% block header%}hello {{username}}{% endblock %}
+
 {% block body %}
-<p style="color:rgb(197, 188, 188); text-align: center;">hello {{username}}</p>
 
 {% if requests%}
-<table class="dashboard_table">
-    <tr>
-        <td>Time Stamp</td>
-        <td>Status</td>
-        <td>Ownership</td>
-        <td>Result</td>
-        <td>Delete Image</td>
-    </tr>
+<div class="dashboard_table">
     {% for req in requests %}
-    <tr>
-        <td>
-            {{req['timestamp'][:4]}}-{{req['timestamp'][4:6]}}-{{req['timestamp'][6:8]}} {{req['timestamp'][8:10]}}:{{req['timestamp'][10:12]}}:{{req['timestamp'][12:]}}
-        </td>
-        <td>{{req['stat']}}</td>
-        <td><button class="button btn-block" onclick="location.href='./updateOwnership/?image_id={{req['requestID']}}&ownership={{req['ownership']}}'">{{req['ownership']}}</button></td>
-        <td>
-        {% if req['stat']|string() =="success" %}
-       		<button class="button btn-block" onclick="location.href='./image/{{req['requestID']}}'">See Image</button>
-        {% endif %}
-        </td>
-        <td>
-        <button class="button btn-block" onclick="location.href='./delete/{{req['requestID']}}'">Delete</button>
-        </td>
-    </tr>
+    <div class="col-lg-3 col-md-4 col-xs-6">
+        <a href="./showImage/?image_id={{req['requestID']}}&page={{page}}" class="d-block mb-4 h-100">
+            <img class="img-fluid img-thumbnail" src="https://s3.us-east-2.amazonaws.com/rtweb-9468/{{req['requestID']}}" alt="">
+        </a>
+    </div>
     {% endfor %}
-</table>
+</div>
 {% else %}
 	<p class="error_message">No image in your dashboard yet. Please generate.</p>
 {% endif %}
-</br>
+<br/>
 <button class="btn btn-primary btn-block btn-large" onclick="location.href='./form'">GENERATE</button> 
-<button class="btn btn-primary btn-block btn-large" onclick="location.href='./public'">SEE PUBLIC IMAGES</button> 
-<button type="button" class="btn btn-primary btn-block btn-large" onclick="location.href='./logout'">LOGOUT</button>
-{{result}}
 {% endblock %}

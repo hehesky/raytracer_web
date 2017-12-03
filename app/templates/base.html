@@ -9,14 +9,37 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
-
+  	
+  	    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename='jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='popper/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
     
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
 </head>
 <body>
+	{% if page %}
+	<div id='cssmenu'>
+		<ul>
+			{% if page == 'dashboard' %} <li class='active'> 
+			{% else %}<li>
+			{% endif %}<a href='./dashboard'>DASHBOARD</a></li>
+			{% if page == 'public' %} <li class='active'> 
+			{% else %}<li>
+			{% endif %}<a href='./public'>PUBLIC IMAGES</a></li>
+			{% if page == 'form' %} <li class='active'> 
+			{% else %}<li>
+			{% endif %}<a href='./form'>GENERATE</a></li>
+			<li><a href='./logout'>LOGOUT</a></li>
+			<li class="logo">Raytracer Service</li>
+		</ul>
+	</div>
+	{% endif %}	
 	<div class=page>
 		<div class=pageHeader>
-		  <h1>Raytracer Service</h1>
-		  <h5>{% block header %}{% endblock %}</h5>
+			<h1>{% block top%}{%endblock%}</h1>
+		  <h4>{% block header %}{% endblock %}</h4>
 		</div>
 		{% block body %}{% endblock %}
 	</div>
