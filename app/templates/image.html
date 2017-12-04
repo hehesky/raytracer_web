@@ -16,7 +16,7 @@
         <td>{{result['timestamp'][:4]}}-{{result['timestamp'][4:6]}}-{{result['timestamp'][6:8]}} {{result['timestamp'][8:10]}}:{{result['timestamp'][10:12]}}:{{result['timestamp'][12:]}}</td>
         <td>{{result['stat']}}</td>
         {% if page == 'dashboard' %}
-        <td><button class="button" onclick="location.href='./updateOwnership/?image_id={{result['result']}}&ownership={{result['ownership']}}'">{{result['ownership']}}</button></td>
+        <td><button class="button" onclick="location.href='./updateOwnership/?image_id={{result['requestID']}}&ownership={{result['ownership']}}'">{{result['ownership']}}</button></td>
         {% else %}
         <td>{{result['username']}}</td>
         {% endif%}

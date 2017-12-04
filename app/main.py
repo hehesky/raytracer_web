@@ -31,7 +31,7 @@ def login():
             session['username']=username
             return redirect(url_for('dashboard'))
         else:
-            return render_template("login.html", message="Account does not exist. Please try again.")
+            return render_template("login.html", message="Your username/password is wrong. Please try again.")
              
 @webapp.route('/register',methods=["GET","POST"])
 def register():
@@ -78,7 +78,7 @@ def updateOwnership():
     print(ownership)
     result = app.db_util.update_request(session['username'], image_id, ownership)
        
-    return redirect(url_for('dashboard'))
+    return redirect(url_for('image', image_id= image_id, page = 'dashboard'))
 
 @webapp.route("/showImage/", methods=['GET'])
 def showImage():
