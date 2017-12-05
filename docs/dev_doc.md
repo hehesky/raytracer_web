@@ -36,9 +36,13 @@ The webapp has these following pages:
 | Dashboard             | /dashboard    | A user's personal page displaying user's past rendering request (images in thumbnail)and allow new ones to be issued. | An unauthenticated attempt to visit this page will be redirected to index page |
 | Public Gallery        | /public       | Lists all public images, as thumbnails, that are rendered |User can set if a certain image is public. The image will shown in this page and be accessible by all users.|
 | Generate Request Form | /form         |Create new rendering request. User must specify the 3D objects (coordinates, color, reflectivity, etc...) to render|Currently allowed objects include sphere, triangle and rectangle. Maximum of 5 objects of each type (maximum of 15 objects in total). Javascript will be called once user submits the form and will format object entities in json string, this json string will be send to backend as a POST request. |
-| Image Page            | /image?[id]&[page]| It displays result of a certain rendering request. Result includes timestamp, ownership/owner, image and request entities. User is able to delete the image and change its ownership on this page if the image belongs to him/her.| Redirected from dashboard or public gallery.  [page] is either 'dashboard' or 'public' defining whether the image comes from user's dashboard or public gallery. |
+| Image Page            | /image?[image_id]&[page]| It displays result of a certain rendering request. Result includes timestamp, ownership/owner, image and request entities. User is able to delete the image and change its ownership on this page if the image belongs to him/her.| Redirected from dashboard or public gallery.  [page] is either 'dashboard' or 'public' defining whether the image comes from user's dashboard or public gallery. |
 
-On the dashboard and public gallery page, if an image's status is still pending, it will be shown as a loading image in thumbnail. If an user clicks on this image, an message saying that we are still generating the image will pop up. The user is also allowed to refresh the page or delete the image from the popup.
+On the dashboard, if an image's status is still pending, it will be shown as a loading image in thumbnail. If an user clicks on this image, an message saying that we are still generating the image will pop up. The user is also allowed to refresh the page or delete the image from the popup.
+
+Image's ownership is set to 'private' as default when generating. Once the image is successfully generated, the owner is able to change its ownership on the Image page.
+
+When clicking on the ownership button on an Image page, a request to "./updateOwnership/?[image_id]&[ownership]" will be sent. Similarly, a request to "./delete/[image_id]" will be sent when clicking on the delete button.
 
 
 ### 2.2 Backend Logic
@@ -81,27 +85,30 @@ DynamoDB is used store user related information. Two tables are used. Their stru
 		"username": [str],
 		"entities": [str, json string detailing the objects of the rendering request]
 	}
+
 #### 2.3.1 Change Image Ownership
-We use the boto3 function 'update_item' to update 'ownership' of an image.
+When a request to './updateOwnership/?[image_id]&[ownership]' is sent in the frontend, the backend will get the image id and the ownership. We will define newOwnership based on the previous ownership of the image and e use the boto3 function 'update_item' to update 'ownership' of an image.
 
 ```python
  req_table.update_item(
         Key={
-            'requestID': requestID
+            'requestID': image_id
         },
         UpdateExpression= "set ownership = :o",
         ExpressionAttributeValues={
-            ":o": newOwnership,
+            ":o": newOwnership
         }
     )
 ```
+
+
 #### 2.3.2 Delete Image
-We use the boto3 function 'delete_item' to delete a rendering request.
+When a request to './delete/[image_id]' is sent in the frontend, the backend will get the image id and use the boto3 function 'delete_item' to delete a rendering request.
 
 ```python
   req_table.delete_item(
         Key={
-            'requestID': requestID,
+            'requestID': image_id
         }
     )
 ```
@@ -208,4 +215,8 @@ Since our rendering engine is written in Python (meaning it's not lightening fas
 
 #### 3.2.3 Issues with Numpy on Lambda
 While testing our rendering engine of Lambda, I found out that Lambda may have issues with numpy (version 1.1.13). By default, our render engine attempts to use Numpy array to store the pixles before dumping them into an image file. On serveral occations Lambda function logs showed that there was an error utilizing Numpy. I bypassed this by allowing the rendering engine to check if numpy is available and uses lists to store pixles when numpy cannot be imported. There are very little discussion about this on the internet, so we have to stick with this work-around for now.
+
+## Conclusion
+
+Through this project, we have gained better understanding of dynamoDB, AWS Lambda and zappas. We've also developed skills in web development. 
 

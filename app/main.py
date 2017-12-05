@@ -135,7 +135,7 @@ def form():
             "entities":json.loads(entities)   
         }
         
-        ownership = request.form['ownership']
+        ownership = 'private'
         #insert pending request to db
         app.db_util.insert_pending_user_request(session['username'],d['id'], d['entities'], ownership)
         #invoke lambda function
