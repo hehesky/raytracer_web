@@ -16,7 +16,7 @@
         <td>{{result['timestamp'][:4]}}-{{result['timestamp'][4:6]}}-{{result['timestamp'][6:8]}} {{result['timestamp'][8:10]}}:{{result['timestamp'][10:12]}}:{{result['timestamp'][12:]}}</td>
         <td>{{result['stat']}}</td>
         {% if page == 'dashboard' %}
-        <td><button class="button" onclick="location.href='./updateOwnership/?image_id={{result['requestID']}}&ownership={{result['ownership']}}'">{{result['ownership']}}</button></td>
+        <td><button style="font-size: 16px;"class="button" onclick="location.href='./updateOwnership/?image_id={{result['requestID']}}&ownership={{result['ownership']}}'">{{result['ownership']}}</button></td>
         {% else %}
         <td>{{result['username']}}</td>
         {% endif%}
@@ -41,10 +41,11 @@
 
 <br/>
 {% if page != 'public' %}
-
-<button type="button" style="display:inline !important;margin:10px auto 10px 30%; " class="btn btn-primary btn-block btn-large" onclick="location.href='./delete/{{result['requestID']}}'">DELETE IMAGE</button>
+<a style="text-decoration: none;" href="https://s3.us-east-2.amazonaws.com/rtweb-9468/{{image_id}}" download><button type="button" style="display:inline !important;margin:10px auto 10px 20%; " class="btn btn-primary btn-block btn-large">DOWNLOAD</button></a>
+<button type="button" style="display:inline !important;margin-top:10px; " class="btn btn-primary btn-block btn-large" onclick="location.href='./delete/{{result['requestID']}}'">DELETE IMAGE</button>
 <button type="button" style="display:inline !important; margin-top:10px;" class="btn btn-primary btn-block btn-large" onclick="location.href='../dashboard'">BACK</button>
 {% else %}
-<button type="button" style="margin-top:10px;" class="btn btn-primary btn-block btn-large" onclick="location.href='../public'">BACK</button>
+<a style="text-decoration: none;" href="https://s3.us-east-2.amazonaws.com/rtweb-9468/{{image_id}}" download><button type="button" style="display:inline !important;margin:10px auto 10px 30%; " class="btn btn-primary btn-block btn-large">DOWNLOAD</button></a>
+<button type="button" style="display:inline !important; margin-top:10px;" class="btn btn-primary btn-block btn-large" onclick="location.href='../public'">BACK</button>
 {% endif %}
 {% endblock %}

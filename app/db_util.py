@@ -81,28 +81,40 @@ def insert_pending_user_request(username,requestID, entities,ownership="private"
     req_table.put_item(Item=entry)
 
 def update_request(username, requestID, ownership):
-    if ownership == 'public':
-        newOwnership = 'private'
-    elif ownership == 'private':
-        newOwnership = 'public'
+    userImages = req_table.scan(FilterExpression=Attr("username").eq(username))
+    
+    if (userImages['Items']):
+        currentImage = [item for item in userImages['Items'] if item['requestID'] == requestID]
         
-    req_table.update_item(
-        Key={
-            'requestID': requestID
-        },
-        UpdateExpression= "set ownership = :o",
-        ExpressionAttributeValues={
-            ":o": newOwnership,
-        }
-    )
+        if (currentImage != []):
+            if ownership == 'public':
+                newOwnership = 'private'
+            elif ownership == 'private':
+                newOwnership = 'public'
+                
+            req_table.update_item(
+                Key={
+                    'requestID': requestID
+                },
+                UpdateExpression= "set ownership = :o",
+                ExpressionAttributeValues={
+                    ":o": newOwnership,
+                }
+            )
     
 def delete_request(username, requestID):
-    req_table.delete_item(
-        Key={
-            'requestID': requestID,
-        }
-    )
-     
+    userImages = req_table.scan(FilterExpression=Attr("username").eq(username))
+    
+    if (userImages['Items']):
+        currentImage = [item for item in userImages['Items'] if item['requestID'] == requestID]
+    
+        if(currentImage != []):
+            req_table.delete_item(
+                Key={
+                    'requestID': requestID,
+                }
+            )
+         
 
 def set_request_stat(requestID,status):
     assert status in ["failed",'pending','success']
