@@ -80,16 +80,17 @@ def insert_pending_user_request(username,requestID, entities,ownership="private"
     }
     req_table.put_item(Item=entry)
 
-def update_request(username, requestID, ownership):
+def update_request(username, requestID):
     userImages = req_table.scan(FilterExpression=Attr("username").eq(username))
     
+    #image to be updated should belongs to session user
     if (userImages['Items']):
         currentImage = [item for item in userImages['Items'] if item['requestID'] == requestID]
         
         if (currentImage != []):
-            if ownership == 'public':
+            if currentImage[0]['ownership'] == 'public':
                 newOwnership = 'private'
-            elif ownership == 'private':
+            elif currentImage[0]['ownership'] == 'private':
                 newOwnership = 'public'
                 
             req_table.update_item(
@@ -101,10 +102,14 @@ def update_request(username, requestID, ownership):
                     ":o": newOwnership,
                 }
             )
+            return True
+        
+    return False
     
 def delete_request(username, requestID):
     userImages = req_table.scan(FilterExpression=Attr("username").eq(username))
     
+    #image to be deleted should belongs to session user
     if (userImages['Items']):
         currentImage = [item for item in userImages['Items'] if item['requestID'] == requestID]
     
@@ -114,6 +119,9 @@ def delete_request(username, requestID):
                     'requestID': requestID,
                 }
             )
+            return True
+        
+    return False
          
 
 def set_request_stat(requestID,status):

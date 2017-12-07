@@ -58,7 +58,7 @@ def dashboard():
     return render_template("dashboard.html",page = 'dashboard', username=session['username'],requests=result)
 
 @webapp.route("/public")
-def public_images():
+def public():
     if 'username' not in session:
         return redirect(url_for('index'))
 
@@ -67,27 +67,11 @@ def public_images():
     
     return render_template("public.html",page ='public', username=session['username'],requests=result)
 
-
-@webapp.route("/updateOwnership/", methods=['GET'])
-def updateOwnership():
-    if 'username' not in session:
-        return redirect(url_for('index'))
-    
-    image_id = request.args.get('image_id')
-    ownership = request.args.get('ownership')
-    print(ownership)
-    result = app.db_util.update_request(session['username'], image_id, ownership)
-       
-    return redirect(url_for('image', image_id= image_id, page = 'dashboard'))
-
 @webapp.route("/showImage/", methods=['GET'])
 def showImage():
     image_id = request.args.get('image_id')
     page = request.args.get('page')
-   
-    if not image_id:
-        return redirect(url_for('dashboard'))
-    
+ 
     return redirect(url_for('image', page = page, image_id=image_id))
 
 @webapp.route("/image")
@@ -98,25 +82,78 @@ def image():
     
     image_id = request.args.get('image_id')
     page = request.args.get('page')
+    if not page:
+        page = 'dashboard'
+    if not image_id:
+        return redirect(url_for(page))
     
     result = app.db_util.get_image_entities(image_id)
     entities = ''
-    if result and 'entities' in result:
-        entities = sorted(result['entities'], key=itemgetter('type'))
     
-    return render_template('image.html', page = page, image_id=image_id, result = result, entities=entities)
+    if not result:
+        return render_template('error.html', error = 'Could not find the image', page = page)
+    
+     #if image is not public and does not belong to session user, show error      
+    if result['username'] != session['username']:
+        if result['ownership'] == 'public':
+            page = 'public'
+        else:
+            return render_template('error.html', error = 'Sorry. You are not allowed to view this image.', page = 'dashboard')
+    
+    if 'entities' in result:
+        entities = sorted(result['entities'], key=itemgetter('type'))
+       
+    
+    return render_template('image.html', session_user = session['username'], page = page, image_id=image_id, result = result, entities=entities)
 
 
-@webapp.route("/delete/<image_id>")
-def delete(image_id):
+@webapp.route("/delete/", methods=['GET'])
+def delete():
     if 'username' not in session:
         return redirect(url_for('index'))
-    print(image_id)
-    print(session['username'])
     
+    image_id = request.args.get('image_id')
+    page = request.args.get('page')
+    
+   
+    if not page:
+        page = 'dashboard'
+    if not image_id:
+        return redirect(url_for('dashboard'))
+   
     result=app.db_util.delete_request(session['username'], image_id)
     
-    return redirect(url_for('dashboard'))
+    if result:
+        if page == 'dashboard':
+            return redirect(url_for('dashboard'))
+        else: 
+            return redirect(url_for('public'))
+        
+    #if delete request failed, show error    
+    return render_template('error.html', error = 'An error occurred. ', page = page)
+   
+   
+@webapp.route("/updateOwnership/", methods=['GET'])
+def updateOwnership():
+    if 'username' not in session:
+        return redirect(url_for('index'))
+    
+    image_id = request.args.get('image_id')
+    page = request.args.get('page')
+    
+    if not page:
+        page = 'dashboard'
+    if not image_id:
+        return redirect(url_for('dashboard'))
+        
+    result = app.db_util.update_request(session['username'], image_id)
+    
+    if result:
+        return redirect(url_for('image', image_id= image_id, page = page))
+    
+    #if update request failed, show error
+    return render_template('error.html', error = 'An error occurred. ', page = page)
+    
 
 
 @webapp.route("/form", methods=["GET", "POST"])
