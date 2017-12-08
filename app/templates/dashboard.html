@@ -14,7 +14,7 @@
         </a>
         {% else %}
          <div class="d-block mb-4 h-100">
-            <img onclick="loading_click('{{req['requestID']}}')" id="loading" class="img-fluid img-thumbnail loading" src="{{ url_for('static', filename='loading.jpg') }}">
+            <img onclick="loading_click('{{req['requestID']}}','dashboard')" id="loading" class="img-fluid img-thumbnail loading" src="{{ url_for('static', filename='loading.jpg') }}">
         </div>
         {% endif%}
     </div>

@@ -48,11 +48,11 @@ $('#myModal').ready(
 	}
 );
 
-function loading_click(image_id) {
+function loading_click(image_id, page) {
 	var modal = document.getElementById('myModal');
 	var btn = document.getElementById("loading");
 	$('#delete_loading')[0].onclick = function () {
-		location.href='./delete/' + image_id;
+		location.href='./delete/?image_id='+image_id +'&page=' + page;
 	};
 	modal.style.display = "block";
 	
